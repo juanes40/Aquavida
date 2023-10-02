@@ -11,6 +11,6 @@ CREATE TABLE `users` (
 
 Creación de bd "Aqua_vida"
 
-CREATE DATABASE Aqua_vida;
+CREATE DATABASE `Aqua_vida`;
 
 
