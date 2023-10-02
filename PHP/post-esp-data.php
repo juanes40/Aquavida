@@ -14,9 +14,9 @@
 $servername = "localhost";
 
 // REPLACE with your Database name
-$dbname = "practica1";
+$dbname = "Aqua_vida";
 // REPLACE with Database user
-$username = "juanes";
+$username = "root";
 // REPLACE with Database user password
 $password = "";
 
