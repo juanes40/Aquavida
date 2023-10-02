@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/font-awesome.min.css">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="../css/admin.css">
+    <style>
+        /* Estilos personalizados para la tabla */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+    </style>
+    <title>Aquavida | Conexion Total</title>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="row contenedor_logo_menu">
+                <div class="logo col-xs-12 col-md-6">
+                    <a href="index.html"><img src="../img/second (Personalizado).jfif" alt=""></a>
+                </div>
+                <div class="menu col-xs-12 col-md-6">
+                    <a href="../HTML/index.html">Inicio</a>
+                    <a href="#">Otros</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section class="main">
+        <section class="caracteristicas">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h3 class="titulo">Datos de los sensores</h3>
+                    </div>
+                </div>
+
+                <!-- Agregar una tabla para mostrar los datos de la base de datos -->
+                <div class="row">
+                    <div class="col-md-12">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Fecha y Hora</th>
+                                    <th>PH Agua</th>
+                                    <th>Nivel Agua</th>
+                                    <th>Temperatura</th>
+                                    <th>Ubicación</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tablaDatos">
+                                <!-- Los datos se cargarán aquí usando JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </section>
+    <script>
+        // Utilizar JavaScript para cargar los datos desde sensores.php y mostrarlos en la tabla
+        fetch("../PHP/sensores.php")
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById("tablaDatos").innerHTML = data;
+            })
+            .catch(error => console.error(error));
+    </script>
+</body>
+</html>

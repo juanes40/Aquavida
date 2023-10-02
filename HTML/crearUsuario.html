@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -8,6 +9,8 @@
 	<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700' rel='stylesheet' type='text/css'>
 	<link rel="stylesheet" href="../css/pruebaCrear.css">
 	<title>Aquavida | Conexion Total</title>
+
+
 </head>
 <body>
 	<header>
@@ -26,7 +29,7 @@
 			<div class="row formulario">
 				<div class="principal col-xs-12 col-md-6">
                     <h2>Creación de Usuario</h2>
-                    <form>
+					<form action="../PHP/insert_user.php" method="POST">
                       <div class="form-group">
                         <label for="nombres">Nombres:</label>
                         <input type="text" class="form-control" id="nombres" name="nombres" required>
@@ -52,12 +55,35 @@
                         <input type="password" class="form-control" id="contraseña" name="contraseña" required>
                       </div>
                   
-                      <button type="submit" class="btn btn-primary">Crear Usuario</button>
-                    </form>
+                      <button type="submit" id="btnCrearUsuario" class="btn btn-primary">Crear Usuario</button>
+					</script>
+					</form>
                   </div>
                   
 			</div>
 		</div>
+		<script>
+			window.addEventListener("load", function () {
+				document.getElementById("btnCrearUsuario").addEventListener("click", function (event) {
+					// Obtener los valores de los campos
+					var nombres = document.getElementById("nombres").value;
+					var apellidos = document.getElementById("apellidos").value;
+					var identificacion = document.getElementById("identificacion").value;
+					var usuario = document.getElementById("usuario").value;
+					var contraseña = document.getElementById("contraseña").value;
+	
+					// Verificar que los campos no estén vacíos
+					if (nombres === "" || apellidos === "" || identificacion === "" || usuario === "" || contraseña === "") {
+						alert("Por favor, llene todos los campos antes de enviar el formulario.");
+						event.preventDefault(); // Prevenir el envío del formulario si falta algún campo
+					} else {
+						alert("Usuario Creado Exitosamente");
+						// Continuar con el envío del formulario
+					}
+				});
+			});
+		</script>
+		
 	</header>
 
 	<section class="main">
