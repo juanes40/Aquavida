@@ -9,6 +9,19 @@ CREATE TABLE `users` (
   PRIMARY KEY (`id`)
 ) 
 
+creación de tabla "sensordata"
+
+CREATE TABLE `sensordata` (
+  `id` int(6) NOT NULL AUTO_INCREMENT,
+  `sensor1` varchar(30) NOT NULL,
+  `location` varchar(30) NOT NULL,
+  `value1` varchar(10) NOT NULL,
+  `sensor2` varchar(30) NOT NULL,
+  `value2` varchar(10) NOT NULL,
+  `reading_time` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  PRIMARY KEY (`id`)
+)
+
 Creación de bd "Aqua_vida"
 
 CREATE DATABASE `Aqua_vida`;
