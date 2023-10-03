@@ -1,7 +1,8 @@
 <?php
 // Conexión a la base de datos (reemplaza con tus propios datos)
 function connection() {
-    // Configuración de conexión a la base de datos
+    
+    
     $servername = "localhost";
     $username = "root";
     $password = "";
