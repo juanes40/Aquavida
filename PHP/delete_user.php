@@ -1,16 +1,7 @@
 <?php
 
-$servername = "localhost";
-$username = "juanes"; //MODIFICAR DE ACUERDO A SU USUARIO EN PHPMYADMIN
-$password = "";
-$dbname = "aqua_vida";
-
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-// Verificar la conexión
-if ($conn->connect_error) {
-    die("Error en la conexión a la base de datos: " . $conn->connect_error);
-}
+include("connection.php");
+$conn = connection();
 
 // Obtener datos del formulario
 $idUsuario = $_POST["idUsuario"];
@@ -20,11 +11,11 @@ $identificacion = $_POST["id"];
 $usuario = $_POST["usuario"];
 $contraseña = $_POST["contraseña"];
 
-// Actualizar datos en la base de datos (esto es solo un ejemplo, debes ajustarlo según tu estructura de base de datos)
+//senstencia para eliminar usuario
 $sql = "DELETE FROM users WHERE id = '$idUsuario'";
+$query = mysqli_query($conn, $sql);
 
-if ($conn->query($sql) === TRUE) {
-    
+if ($query) {
     Header("Location: ../html/eliminarUsuario.html");
 } else {
     echo "Error al actualizar los datos: " . $conn->error;

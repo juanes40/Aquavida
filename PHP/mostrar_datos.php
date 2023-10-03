@@ -22,7 +22,6 @@
         echo "<td>" . $row['reading_time'] . "</td>";
         echo "</tr>";
     }
-
         mysqli_close($conn);
 ?>
 

@@ -13,7 +13,6 @@ $sql = "INSERT INTO users VALUES('$id','$name','$lastname','$username','$passwor
 $query = mysqli_query($conn, $sql);
 
 if($query){
-    
     Header("Location: ../html/crearUsuario.html");
 }else{
 
