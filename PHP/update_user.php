@@ -16,7 +16,7 @@ if ($conn->connect_error) {
 $idUsuario = $_POST["idUsuario"];
 $nombres = $_POST["nombres"];
 $apellidos = $_POST["apellidos"];
-$identificacion = $_POST["identificacion"];
+$identificacion = $_POST["id"];
 $usuario = $_POST["usuario"];
 $contraseña = $_POST["contraseña"];
 
