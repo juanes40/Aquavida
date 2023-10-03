@@ -68,43 +68,56 @@
 		</div>
 		<script>
             window.addEventListener("load", function () {
-                document.getElementById("btnBuscarUsuario").addEventListener("click", function (event) {
-                    var idUsuario = document.getElementById("idUsuario").value;
-    
-                    // Realiza una solicitud AJAX para obtener los datos del usuario
-                    var xhr = new XMLHttpRequest();
-                    xhr.open("POST", "../PHP/consultar_datos_users.php", true);
-                    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-                    xhr.onreadystatechange = function () {
-                        if (xhr.readyState === 4 && xhr.status === 200) {
+            document.getElementById("btnBuscarUsuario").addEventListener("click", function (event) {
+                var idUsuario = document.getElementById("idUsuario").value;
+
+                // Verificar si el campo idUsuario está vacío
+                if (idUsuario.trim() === "") {
+                    alert("Por favor, ingrese un ID de usuario.");
+                    return; // Salir de la función si el campo está vacío
+                }
+
+                // Realiza una solicitud AJAX para obtener los datos del usuario
+                var xhr = new XMLHttpRequest();
+                xhr.open("POST", "../PHP/consultar_datos_users.php", true);
+                xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState === 4) {
+                        if (xhr.status === 200) {
                             var respuesta = JSON.parse(xhr.responseText);
-                            if (respuesta) {
+                            if (respuesta.error) {
+                                // El usuario no fue encontrado, muestra una alerta de error
+                                alert(respuesta.error);
+                            } else {
                                 // Mostrar los datos del usuario encontrado
                                 document.getElementById("nombres").value = respuesta.nombres;
                                 document.getElementById("apellidos").value = respuesta.apellidos;
                                 document.getElementById("id").value = respuesta.id;
                                 document.getElementById("usuario").value = respuesta.usuario;
                                 document.getElementById("contraseña").value = respuesta.contraseña;
-    
+
                                 // Mostrar el área de datos del usuario
                                 document.getElementById("datosUsuario").style.display = "block";
-                            } else {
-                                // El usuario no fue encontrado
-                                alert("Usuario no encontrado");
                             }
+                        } else {
+                            // Error en la solicitud AJAX
+                            alert("Error al buscar el usuario");
                         }
-                    };
-                    xhr.send("idUsuario=" + idUsuario);
-    
-                    // Prevenir el envío del formulario
-                    event.preventDefault();
-                });
+                    }
+                };
+                xhr.send("idUsuario=" + idUsuario);
+
+                // Prevenir el envío del formulario
+                event.preventDefault();
+            });
+
+
     
                 document.getElementById("btnEditarUsuario").addEventListener("click", function () {
                     // Validar que los campos estén llenos antes de actualizar
                     var nombres = document.getElementById("nombres").value;
                     var apellidos = document.getElementById("apellidos").value;
-                    var identificacion = document.getElementById("identificacion").value;
+                    var identificacion = document.getElementById("id").value;
                     var usuario = document.getElementById("usuario").value;
                     var contraseña = document.getElementById("contraseña").value;
     

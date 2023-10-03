@@ -1,3 +1,4 @@
+
 <?php
 // Realiza la conexión a la base de datos
 $servername = "localhost";
@@ -41,7 +42,10 @@ if(isset($_POST["idUsuario"])) {
         echo json_encode($usuarioEncontrado);
     } else {
         // El usuario no fue encontrado
-        echo "Usuario no encontrado";
+        $respuestaError = array(
+            "error" => "Usuario no encontrado"
+        );
+        echo json_encode($respuestaError);
     }
 } else {
     echo "ID del usuario no proporcionado";
@@ -50,3 +54,5 @@ if(isset($_POST["idUsuario"])) {
 // Cierra la conexión a la base de datos
 $conn->close();
 ?>
+
+
