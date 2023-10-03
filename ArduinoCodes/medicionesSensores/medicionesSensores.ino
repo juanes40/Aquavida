@@ -4,8 +4,8 @@
 #include <DallasTemperature.h>
 
 // Replace with your network credentials
-const char* ssid = "APTO4A";
-const char* password = "angel1912leg3526";
+const char* ssid = "Alejandro";
+const char* password = "12345678";
 
 // REPLACE with your Domain name and URL path or IP address with path
 const char* serverName = "http://192.168.1.105/Aquavida/PHP/post-esp-data.php";
