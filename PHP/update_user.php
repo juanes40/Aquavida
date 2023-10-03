@@ -1,5 +1,5 @@
 <?php
-// Conexión a la base de datos (reemplaza los datos con los tuyos)
+
 $servername = "localhost";
 $username = "root";
 $password = "";
@@ -21,10 +21,11 @@ $usuario = $_POST["usuario"];
 $contraseña = $_POST["contraseña"];
 
 // Actualizar datos en la base de datos (esto es solo un ejemplo, debes ajustarlo según tu estructura de base de datos)
-$sql = "UPDATE users SET nombres='$nombres', apellidos='$apellidos', identificacion='$identificacion', usuario='$usuario', contraseña='$contraseña' WHERE id='$idUsuario'";
+$sql = "UPDATE users SET name='$nombres', lastname='$apellidos', id='$identificacion', username='$usuario', password='$contraseña' WHERE id='$idUsuario'";
 
 if ($conn->query($sql) === TRUE) {
-    echo "Los datos se actualizaron correctamente.";
+    
+    Header("Location: ../html/editarUsuario.html");
 } else {
     echo "Error al actualizar los datos: " . $conn->error;
 }

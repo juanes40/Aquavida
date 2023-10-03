@@ -24,6 +24,7 @@ if(isset($_POST["idUsuario"])) {
         $row = $result->fetch_assoc();
         $nombres = $row["name"];
         $apellidos = $row["lastname"];
+        $id = $row["id"];
         $usuario = $row["username"];
         $contraseña = $row["password"];
         
@@ -31,6 +32,7 @@ if(isset($_POST["idUsuario"])) {
         $usuarioEncontrado = array(
             "nombres" => $nombres,
             "apellidos" => $apellidos,
+            "id" => $id,
             "usuario" => $usuario,
             "contraseña" => $contraseña
         );
