@@ -61,6 +61,19 @@
   header .formulario .principal .btn-primary:hover {
     background-color: #005229; /* Cambiar color al pasar el ratón */
   }
+  header .container .formulario .principal .btn-dangerE {
+    background-color: #c82333; /* Color de fondo */
+    border: none;
+    color: #fff; /* Color del texto */
+    font-size: 18px;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease; /* Transición suave al pasar el ratón */
+  }
+  header .container .formulario .principal .btn-dangerE:hover {
+    background-color: #c8234f; /* Cambiar color al pasar el ratón */
+  }
 
   /* ----- ----- MAIN ----- ----- */
   .main .caracteristicas {

@@ -21,11 +21,11 @@ $usuario = $_POST["usuario"];
 $contraseña = $_POST["contraseña"];
 
 // Actualizar datos en la base de datos (esto es solo un ejemplo, debes ajustarlo según tu estructura de base de datos)
-$sql = "UPDATE users SET name='$nombres', lastname='$apellidos', id='$identificacion', username='$usuario', password='$contraseña' WHERE id='$idUsuario'";
+$sql = "DELETE FROM users WHERE id = '$idUsuario'";
 
 if ($conn->query($sql) === TRUE) {
     
-    Header("Location: ../html/editarUsuario.html");
+    Header("Location: ../html/eliminarUsuario.html");
 } else {
     echo "Error al actualizar los datos: " . $conn->error;
 }
