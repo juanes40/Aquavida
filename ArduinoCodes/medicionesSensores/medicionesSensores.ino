@@ -8,7 +8,7 @@ const char* ssid = "TP-Link_E11C";
 const char* password = "34819456";
 
 // REPLACE with your Domain name and URL path or IP address with path
-const char* serverName = "http://192.168.1.105/Aquavida/PHP/post-esp-data.php";
+const char* serverName = "http://192.168.190.71/Aquavida/PHP/post-esp-data.php";
 
 // Keep this API Key value to be compatible with the PHP code provided in the project page.
 // If you change the apiKeyValue value, the PHP file /post-esp-data.php also needs to have the same key
