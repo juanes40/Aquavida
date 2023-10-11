@@ -35,7 +35,6 @@ if(isset($_POST["idUsuario"])) {
             "apellidos" => $apellidos,
             "id" => $id,
             "usuario" => $usuario,
-            "contraseña" => $contraseña
         );
 
         // Devuelve los datos en formato JSON

@@ -12,8 +12,11 @@ $identificacion = $_POST["id"];
 $usuario = $_POST["usuario"];
 $contraseña = $_POST["contraseña"];
 
+// Hasheamos la contraseña usando password_hash
+$hashedPassword = password_hash($contraseña, PASSWORD_DEFAULT);
+
 // Actualizar datos en la base de datos 
-$sql = "UPDATE users SET name='$nombres', lastname='$apellidos', id='$identificacion', username='$usuario', password='$contraseña' WHERE id='$idUsuario'";
+$sql = "UPDATE users SET name='$nombres', lastname='$apellidos', id='$identificacion', username='$usuario', password='$hashedPassword' WHERE id='$idUsuario'";
 $query = mysqli_query($conn, $sql);
 
 if ($query) {
