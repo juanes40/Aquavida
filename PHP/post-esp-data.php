@@ -6,7 +6,7 @@ $servername = "localhost";
 // REPLACE with your Database name
 $dbname = "aqua_vida";
 // REPLACE with Database user
-$username = "root";
+$username = "juanes";
 // REPLACE with Database user password
 $password = "";
 
