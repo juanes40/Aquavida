@@ -4,7 +4,7 @@ function connection() {
     
     
     $servername = "localhost";
-    $username = "juanes";
+    $username = "root";
     $password = "";
     $dbname = "aqua_vida";
 
