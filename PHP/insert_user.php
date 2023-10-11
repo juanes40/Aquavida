@@ -8,14 +8,18 @@ $lastname = $_POST['apellidos'];
 $username = $_POST['usuario'];
 $password = $_POST['contraseña'];
 
+// Hasheamos la contraseña usando password_hash
+$hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
-$sql = "INSERT INTO users VALUES('$id','$name','$lastname','$username','$password')";
+// Utiliza el hash de la contraseña en lugar de la contraseña en el SQL
+$sql = "INSERT INTO users (id, name, lastname, username, password) VALUES ('$id', '$name', '$lastname', '$username', '$hashedPassword')";
 $query = mysqli_query($conn, $sql);
 
-if($query){
+if ($query) {
     Header("Location: ../html/crearUsuario.html");
-}else{
-
+} else {
+    // Manejar errores
+    echo "Error: " . mysqli_error($conn);
 }
-
 ?>
+
