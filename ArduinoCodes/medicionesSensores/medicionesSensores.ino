@@ -4,11 +4,11 @@
 #include <DallasTemperature.h>
 
 // Replace with your network credentials
-const char* ssid = "Alejandro";
-const char* password = "12345678";
+const char* ssid = "Esteban";
+const char* password = "123456789A";
 
 // REPLACE with your Domain name and URL path or IP address with path
-const char* serverName = "http://192.168.1.105/Aquavida/PHP/post-esp-data.php";
+const char* serverName = "http://192.168.59.148/Aquavida/PHP/post-esp-data.php";
 
 // Keep this API Key value to be compatible with the PHP code provided in the project page.
 // If you change the apiKeyValue value, the PHP file /post-esp-data.php also needs to have the same key
