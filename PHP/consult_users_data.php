@@ -1,4 +1,3 @@
-
 <?php
 // Realiza la conexión a la base de datos
 $servername = "localhost";
@@ -17,7 +16,7 @@ if(isset($_POST["idUsuario"])) {
     $idUsuario = $_POST["idUsuario"];
     
     // Realiza la consulta SQL para obtener los datos del usuario
-    $sql = "SELECT id, name, lastname, username, password FROM users WHERE id = $idUsuario";
+    $sql = "SELECT id, name, lastname, username, password, identifier FROM users WHERE id = $idUsuario";
     $result = $conn->query($sql);
 
     if ($result->num_rows > 0) {
@@ -28,13 +27,15 @@ if(isset($_POST["idUsuario"])) {
         $id = $row["id"];
         $usuario = $row["username"];
         $contraseña = $row["password"];
-        
+        $identificador = $row["identifier"]; // Agregar el campo "identifier"
+
         // Crea un arreglo asociativo con los datos del usuario
         $usuarioEncontrado = array(
             "nombres" => $nombres,
             "apellidos" => $apellidos,
             "id" => $id,
             "usuario" => $usuario,
+            "identificador" => $identificador, // Agregar "identificador" al arreglo de respuesta
         );
 
         // Devuelve los datos en formato JSON
@@ -53,5 +54,4 @@ if(isset($_POST["idUsuario"])) {
 // Cierra la conexión a la base de datos
 $conn->close();
 ?>
-
 

@@ -55,6 +55,15 @@
                                 <label for="contraseña">Contraseña:</label>
                                 <input type="password" class="form-control" id="contraseña" name="contraseña" required>
                             </div>
+                            <div class="form-group">
+                                <label for="opciones">Selecciona un identificador:</label>
+                                <select class="form-control" name="identificador" id="identificador">
+                                    <option value="0">0</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                </select>
+                            </div>
+                            
                             <button type="submit" id="btnEditarUsuario" class="btn btn-primary">Editar Usuario</button>
                         </div>
                     </form>
@@ -88,6 +97,19 @@
                                     document.getElementById("id").value = respuesta.id;
                                     document.getElementById("usuario").value = respuesta.usuario;
                                     document.getElementById("contraseña").value = respuesta.contraseña;
+                                    document.getElementById("identificador").value = respuesta.identificador;
+
+                                    console.log("respuesta.identificador:", respuesta.identificador);
+
+                                    var identificadorSelect = document.getElementById("identificador");
+
+                                    for (var i = 0; i < identificadorSelect.options.length; i++) {
+                                        if (identificadorSelect.options[i].value === respuesta.identificador) {
+                                            identificadorSelect.selectedIndex = i;
+                                            break;
+                                        }
+                                    }
+
                                     // Mostrar el área de datos del usuario
                                     document.getElementById("datosUsuario").style.display = "block";
                                 }
@@ -102,17 +124,23 @@
                     event.preventDefault();
                 });
                 document.getElementById("btnEditarUsuario").addEventListener("click", function () {
+                    //event.preventDefault();
                     // Validar que los campos estén llenos antes de actualizar
                     var nombres = document.getElementById("nombres").value;
                     var apellidos = document.getElementById("apellidos").value;
                     var identificacion = document.getElementById("id").value;
                     var usuario = document.getElementById("usuario").value;
                     var contraseña = document.getElementById("contraseña").value;
-                    // Validar la contraseña
-                    if (!validarContraseña(contraseña)) {
-                        alert("La debe contraseña tener 5 carácteres, por lo menos un número y una letra mayúscula");
+                    var identificador = document.getElementById("identificador").value
+
+                   // Verificar si el campo de contraseña ha sido modificado
+                    var contraseñaModificada = document.getElementById("contraseña").getAttribute("data-modified");
+
+                    if (contraseñaModificada === "true" && !validarContraseña(contraseña)) {
+                        alert("La contraseña debe tener 5 carácteres, por lo menos un número y una letra mayúscula");
                         return;
                     }
+                    
                     // Realizar una solicitud AJAX para actualizar los datos
                     var idUsuario = document.getElementById("idUsuario").value;
                     var datosActualizados = {
