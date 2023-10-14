@@ -123,72 +123,75 @@
                     // Prevenir el envío del formulario
                     event.preventDefault();
                 });
-                document.getElementById("btnEditarUsuario").addEventListener("click", function () {
-                    //event.preventDefault();
-                    // Validar que los campos estén llenos antes de actualizar
+                document.getElementById("btnEditarUsuario").addEventListener("click", function (event) {
                     var nombres = document.getElementById("nombres").value;
                     var apellidos = document.getElementById("apellidos").value;
                     var identificacion = document.getElementById("id").value;
                     var usuario = document.getElementById("usuario").value;
                     var contraseña = document.getElementById("contraseña").value;
-                    var identificador = document.getElementById("identificador").value
+                    var identificador = document.getElementById("identificador").value;
 
-                   // Verificar si el campo de contraseña ha sido modificado
-                    var contraseñaModificada = document.getElementById("contraseña").getAttribute("data-modified");
-
-                    if (contraseñaModificada === "true" && !validarContraseña(contraseña)) {
-                        alert("La contraseña debe tener 5 carácteres, por lo menos un número y una letra mayúscula");
-                        return;
-                    }
-                    
-                    // Realizar una solicitud AJAX para actualizar los datos
-                    var idUsuario = document.getElementById("idUsuario").value;
-                    var datosActualizados = {
-                        idUsuario: idUsuario,
-                        nombres: nombres,
-                        apellidos: apellidos,
-                        id: identificacion,
-                        usuario: usuario,
-                        contraseña: contraseña
-                    };
-                    var xhr = new XMLHttpRequest();
-                    xhr.open("POST", "../PHP/update_user.php", true);
-                    xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-                    xhr.onreadystatechange = function () {
-                        if (xhr.readyState === 4 && xhr.status === 200) {
-                            var respuesta = JSON.parse(xhr.responseText);
-                            if (respuesta.success) {
-                                alert("Los datos se actualizaron correctamente.");
-                            } else {
-                                alert("Error al actualizar los datos.");
-                            }
+                    // Función para validar la contraseña
+                    function validarContraseña(contraseña) {
+                        // Verificar si la contraseña contiene al menos 5 caracteres de longitud
+                        if (contraseña.length < 5) {
+                            return false;
                         }
-                    };
-                    xhr.send(JSON.stringify(datosActualizados));
+                        // Verificar si la contraseña contiene al menos un carácter en mayúscula
+                        if (!/[A-Z]/.test(contraseña)) {
+                            return false;
+                        }
+                        // Verificar si la contraseña contiene al menos un carácter en minúscula
+                        if (!/[a-z]/.test(contraseña)) {
+                            return false;
+                        }
+                        // Verificar si la contraseña contiene al menos un carácter numérico
+                        if (!/[0-9]/.test(contraseña)) {
+                            return false;
+                        }
+                        // La contraseña cumple con todos los criterios de seguridad
+                        return true;
+                    }
+
+                    if (!validarContraseña(contraseña)) {
+                        alert("La contraseña debe tener 5 caracteres, por lo menos un número y una letra mayúscula");
+                        event.preventDefault(); // Detener el proceso y prevenir el envío del formulario si la contraseña no cumple con los criterios
+                    } else {
+                        // Realizar una solicitud AJAX para actualizar los datos
+                        var idUsuario = document.getElementById("idUsuario").value;
+                        var datosActualizados = {
+                            idUsuario: idUsuario,
+                            nombres: nombres,
+                            apellidos: apellidos,
+                            id: identificacion,
+                            usuario: usuario,
+                            contraseña: contraseña,
+                            identificador: identificador
+                        };
+                        var xhr = new XMLHttpRequest();
+                        xhr.open("POST", "../PHP/update_user.php", true);
+                        xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+                        xhr.onreadystatechange = function () {
+                            if (xhr.readyState === 4 && xhr.status === 200) {
+                                var respuesta = JSON.parse(xhr.responseText);
+                                if (respuesta.success) {
+                                    alert("Los datos se actualizaron correctamente.");
+                                } else {
+                                    alert("Error al actualizar los datos.");
+                                }
+                            }
+                        };
+                        xhr.send(JSON.stringify(datosActualizados));
+                    }
                 });
+
+                
+
+
+
             });
 
-            // Función para validar la contraseña
-            function validarContraseña(contraseña) {
-                // Verificar si la contraseña contiene al menos 5 caracteres de longitud
-                if (contraseña.length < 5) {
-                    return false;
-                }
-                // Verificar si la contraseña contiene al menos un carácter en mayúscula
-                if (!/[A-Z]/.test(contraseña)) {
-                    return false;
-                }
-                // Verificar si la contraseña contiene al menos un carácter en minúscula
-                if (!/[a-z]/.test(contraseña)) {
-                    return false;
-                }
-                // Verificar si la contraseña contiene al menos un carácter numérico
-                if (!/[0-9]/.test(contraseña)) {
-                    return false;
-                }
-                // La contraseña cumple con todos los criterios de seguridad
-                return true;
-            }
+            
         </script>
     </header>
 </body>

@@ -23,8 +23,9 @@ $query = mysqli_query($conn, $sql);
 if ($query) {
     Header("Location: ../html/editarUsuario.html");
 } else {
-    echo "Error al actualizar los datos: " . $conn->error;
+    echo "Error al actualizar los datos: " . mysqli_error($conn);
 }
+
 
 $conn->close();
 ?>
