@@ -1,14 +1,7 @@
 <?php
 
-
-$servername = "localhost";
-
-// REPLACE with your Database name
-$dbname = "aqua_vida";
-// REPLACE with Database user
-$username = "juanes";
-// REPLACE with Database user password
-$password = "";
+include("connection.php");
+$conn = connection();
 
 // Keep this API Key value to be compatible with the ESP32 code provided in the project page. 
 // If you change this value, the ESP32 sketch needs to match
@@ -27,12 +20,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $sensor3 = test_input($_POST["sensor3"]);
         $value3 = test_input($_POST["value3"]);
         
-        // Create connection
-        $conn = new mysqli($servername, $username, $password, $dbname);
-        // Check connection
-        if ($conn->connect_error) {
-            die("Connection failed: " . $conn->connect_error);
-        } 
+        
         
         $sql = "INSERT INTO SensorData (sensor1, location, value1, sensor2, value2, sensor3, value3)
         VALUES ('" . $sensor1 . "', '" . $location . "', '" . $value1 . "','" . $sensor2 . "', '" . $value2 . "', '" . $sensor3 . "', '" . $value3 . "')";

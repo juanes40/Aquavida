@@ -1,15 +1,6 @@
 <?php
-// Realiza la conexión a la base de datos
-$servername = "localhost";
-$username = "root";
-$password = "";
-$database = "aqua_vida";
-
-$conn = new mysqli($servername, $username, $password, $database);
-
-if ($conn->connect_error) {
-    die("La conexión a la base de datos falló: " . $conn->connect_error);
-}
+include("connection.php");
+$conn = connection();
 
 // Obtén el ID del usuario enviado desde el formulario
 if(isset($_POST["idUsuario"])) {
