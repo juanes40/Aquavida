@@ -7,7 +7,7 @@ $conn = connection();
 // If you change this value, the ESP32 sketch needs to match
 $api_key_value = "tPmAT5Ab3j7F9";
 
-$api_key= $sensor1 = $location = $value1 =$sensor2 = $value2 = $sensor3 = $value3 = "";
+$api_key= $sensor1 = $location = $value1 =$sensor2 = $value2 = $sensor3 = $value3 = $tiempotemp = $tiemponivel = $tiempoph = "";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $api_key = test_input($_POST["api_key"]);
@@ -19,11 +19,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $value2 = test_input($_POST["value2"]);
         $sensor3 = test_input($_POST["sensor3"]);
         $value3 = test_input($_POST["value3"]);
+        $tiempotemp = test_input($_POST["tiempotemp"]);
+        $tiemponivel = test_input($_POST["tiemponivel"]);
+        $tiempoph = test_input($_POST["tiempoph"]);
         
+        if ($conn->connect_error) {
+            die("Connection failed: " . $conn->connect_error);
+        } 
         
-        
-        $sql = "INSERT INTO SensorData (sensor1, location, value1, sensor2, value2, sensor3, value3)
-        VALUES ('" . $sensor1 . "', '" . $location . "', '" . $value1 . "','" . $sensor2 . "', '" . $value2 . "', '" . $sensor3 . "', '" . $value3 . "')";
+        $sql = "INSERT INTO SensorData (sensor1, location, value1, sensor2, value2, sensor3, value3, tiempotemp, tiemponivel, tiempoph)
+        VALUES ('" . $sensor1 . "', '" . $location . "', '" . $value1 . "','" . $sensor2 . "', '" . $value2 . "', '" . $sensor3 . "', '" . $value3 . "','". $tiempotemp ."','". $tiemponivel ."','". $tiempoph .")";
         
         if ($conn->query($sql) === TRUE) {
             echo "New record created successfully";
