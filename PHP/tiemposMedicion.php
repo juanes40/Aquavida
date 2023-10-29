@@ -4,21 +4,23 @@ $conn = connection();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Verifica si se ha enviado el formulario
-    $newTiempoTemp = $_POST["temperaturaSensor"];
-    $newTiempoNivel = $_POST["nivelAguaSensor"];
-    $newTiempoPH = $_POST["phSensor"];
+    $newTiempoTemp = isset($_POST["temperaturaSensor"]) ? $_POST["temperaturaSensor"] : null;
+    $newTiempoNivel = isset($_POST["nivelAguaSensor"]) ? $_POST["nivelAguaSensor"] : null;
+    $newTiempoPH = isset($_POST["phSensor"]) ? $_POST["phSensor"] : null;
+
 
     // Actualiza los campos en la base de datos
     $sql = "UPDATE sensordata SET tiempotemp = '$newTiempoTemp', tiemponivel = '$newTiempoNivel', tiempoph = '$newTiempoPH' ORDER BY id DESC LIMIT 1";
 
     if ($conn->query($sql) === TRUE) {
-        echo "Valores actualizados correctamente";
+        header('Location: ../HTML/mostrar_tabla_datos.html');
+        exit;
     } else {
         echo "Error al actualizar los valores: " . $conn->error;
     }
 }
 
-$sql = "SELECT tiempotemp, tiemponivel, tiempoph FROM sensordata ORDER BY id DESC LIMIT 1";
+$sql = "SELECT id, tiempotemp, tiemponivel, tiempoph FROM sensordata ORDER BY id DESC LIMIT 1";
 $query = mysqli_query($conn, $sql);
 
 while($row = mysqli_fetch_assoc($query)){
