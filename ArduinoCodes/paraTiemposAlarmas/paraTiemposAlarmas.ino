@@ -52,7 +52,45 @@
     if (WiFi.status() == WL_CONNECTED) {
       WiFiClient client;
       HTTPClient http;
+      http.begin(client, serverName);
+      String serverPath = "http://192.168.51.102/Aquavida/PHP/get-esp-data.php";
+      String conectar = serverPath+"?api_key="+apiKeyValue+"&tiempo1=tiempotemp"+"&tiempo2=tiemponivel"+"&tiempo3=tiempoph";
+      http.begin(client, conectar.c_str());
+      http.addHeader("Content-Type", "application/x-www-form-urlencoded");
+      int httpResponseCodeGet = http.GET();
 
+      if (httpResponseCodeGet>0) {
+        Serial.print("HTTP Response code GET: ");
+        Serial.println(httpResponseCodeGet);
+        
+      }
+      else {
+        Serial.print("Error code GET: ");
+        Serial.println(httpResponseCodeGet);
+      }
+      // Realiza la solicitud HTTP GET y obtiene la respuesta
+      String response = http.getString();
+
+// Divide la respuesta en partes usando la coma como delimitador
+      String parts[3];
+      int index = 0;
+      int lastIndex = 0;
+      for (int i = 0; i < response.length(); i++) {
+        if (response.charAt(i) == ',') {
+        parts[index] = response.substring(lastIndex, i); // Obtiene la parte entre comas
+        index++;
+        lastIndex = i + 1;
+      }
+    }
+    parts[index] = response.substring(lastIndex); // La última parte después de la última coma
+
+// Convierte las partes en enteros
+      tiempoTemp = parts[0].toInt();
+      tiempoNivel = parts[1].toInt();
+      tiempoPH = parts[2].toInt();
+
+      http.end();
+      delay(500);
       // Your Domain name with URL path or IP address with path
       http.begin(client, serverName);
 
@@ -68,7 +106,7 @@
                               "&location=" + sensorLocation + "&value1=" + String(temperatureCelsius) +
                               "&sensor2=" + sensorName2 + "&value2=" + String(waterLevel) +
                               "&sensor3=" + sensorName3 + "&value3=" + String(ph) + "&tiempotemp="+ String(tiempoTemp) +
-                              "&tiemponivel=" + String(tiempoNivel) + "&tiempoph="+ String(tiempoPH);
+                              "&tiemponivel=" + String(tiempoNivel) + "&tiempoph=" + String(tiempoPH) + "";
 
       Serial.print("httpRequestData: ");
       Serial.println(httpRequestData);
@@ -92,7 +130,7 @@
     }
 
     // Send an HTTP POST request every 30 seconds
-    delay(10000);
+    delay(30000);
   }
 
   float leerTemp(int tiempoTemp){
