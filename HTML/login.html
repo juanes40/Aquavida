@@ -6,8 +6,10 @@
 	<link rel="stylesheet" href="../css/bootstrap.min.css">
 	<link rel="stylesheet" href="../css/font-awesome.min.css">
 	<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700' rel='stylesheet' type='text/css'>
-	<link rel="stylesheet" href="../css/admin.css">
-	<title>Aquavida | Conexion Total</title>
+	<link rel="stylesheet" href="../css/pruebaCrear.css">
+	<title>Aquavida | Conexion Total 2023</title>
+
+
 </head>
 <body>
 	<header>
@@ -18,18 +20,52 @@
 				</div>
 				<div class="menu col-xs-12 col-md-6">
 					<a href="../HTML/index.html">Inicio</a>
-					<a href="../HTML/Usuarios.html">Usuarios</a>
-					
+					<a href="#">Otros</a>
+					<a href="#">Otros</a>
 				</div>
 			</div>
 
-			<div class="row textos">
+			<div class="row formulario">
 				<div class="principal col-xs-12 col-md-6">
-					<a href="mostrar_tabla_datos.html">Datos sensores</a>
-                    
-				</div>
+                    <h2>Iniciar Sesión</h2>
+					<form action="../PHP/login.php" method="POST">
+                                      
+                      <div class="form-group">
+                        <label for="usuario">Usuario:</label>
+                        <input type="text" class="form-control" id="usuario" name="usuario" required>
+                      </div>
+                  
+                      <div class="form-group">
+                        <label for="contraseña">Contraseña:</label>
+                        <input type="password" class="form-control" id="contraseña" name="contraseña" required>
+                      </div>
+                  
+                      <button type="submit" id="btnIniciarSesion" class="btn btn-primary">Ingresar</button>
+					</script>
+					</form>
+                  </div>
+                  
 			</div>
 		</div>
+		<script>
+			window.addEventListener("load", function () {
+				document.getElementById("btnIniciarSesion").addEventListener("click", function (event) {
+					// Obtener los valores de los campos
+					var usuario = document.getElementById("usuario").value;
+					var contraseña = document.getElementById("contraseña").value;
+	
+					// Verificar que los campos no estén vacíos
+					if (usuario === "" || contraseña === "") {
+						alert("Por favor, llene todos los campos antes de enviar el formulario.");
+						event.preventDefault(); // Prevenir el envío del formulario si falta algún campo
+					} else {
+						
+						
+					}
+				});
+			});
+		</script>
+		
 	</header>
 
 	<section class="main">
@@ -65,3 +101,5 @@
 
 </body>
 </html>
+
+

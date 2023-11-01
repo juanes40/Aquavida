@@ -10,7 +10,7 @@
   
   /* ----- ----- HEADER ----- ----- */
   header {
-    background: url(../img/bgAdmin.jpg);
+    background: url(../img/bgAquavida.png);
     background-size: cover;
     background-color: rgba(255, 255, 255, 0.2);
     background-position: center 0;
@@ -35,49 +35,51 @@
     margin-left: 60px;
     font-size: 18px;
   }
-  header .formulario .principal{
-    background-color: #fff; /* Fondo blanco */
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3); 
-    margin: 0 auto; 
-    max-width: 400px; 
+  header .textos {
+    color: #fff;
+    text-align: center;
+    margin: 200px 0;
   }
-  header .formulario .principal .form-control {
-    font-size: 18px; /* Tamaño de fuente más grande */
-    padding: 10px;
-    margin-bottom: 20px; /* Espacio entre campos */
+  header .textos .primera_linea,
+  header .textos .segunda_linea {
+    font-family: "Open Sans", Arial, Sans-serif;
+    font-weight: 300;
   }
-  header .formulario .principal .btn-primary {
-    background-color: #006633; /* Color de fondo */
-    border: none;
-    color: #fff; /* Color del texto */
-    font-size: 18px;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease; /* Transición suave al pasar el ratón */
+  header .textos .primera_linea {
+    font-size: 35px;
+    line-height: 35px;
+    margin-bottom: 30px;
   }
-  header .formulario .principal .btn-primary:hover {
-    background-color: #005229; /* Cambiar color al pasar el ratón */
+  header .textos .segunda_linea {
+    font-size: 25px;
+    line-height: 25px;
+    margin-bottom: 60px;
   }
-  header .container .formulario .principal .btn-dangerE {
-    background-color: #c82333; /* Color de fondo */
-    border: none;
-    color: #fff; /* Color del texto */
-    font-size: 18px;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease; /* Transición suave al pasar el ratón */
+  header .textos .contenedor-btns a {
+    border-radius: 4px;
+    border: 2px solid #fff;
+    color: #fff;
+    padding: 12px 0;
+    font-weight: 600;
+    width: 235px;
+    display: inline-block;
+    text-align: center;
+    margin: 0 10px;
   }
-  header .container .formulario .principal .btn-dangerE:hover {
-    background-color: #c8234f; /* Cambiar color al pasar el ratón */
+  header .textos .contenedor-btns a:hover {
+    text-decoration: none;
+    background: #fff;
+    color: #4f4f4f;
   }
-
+  
   /* ----- ----- MAIN ----- ----- */
   .main .caracteristicas {
     padding: 70px 0;
+    background: url(../img/bguser1.jfif);
+    background-size: cover;
+    background-color: rgba(255, 255, 255, 0.2);
+    background-position: center 0;
+    background-repeat: no-repeat;
   }
   .main .caracteristicas .titulo {
     text-align: center;

@@ -1,16 +1,8 @@
 <?php
 
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "aqua_vida";
-
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-// Verificar la conexión
-if ($conn->connect_error) {
-    die("Error en la conexión a la base de datos: " . $conn->connect_error);
-}
+// Conexión con la base de datos
+include("connection.php");
+$conn = connection();
 
 // Obtener datos del formulario
 $idUsuario = $_POST["idUsuario"];
@@ -19,16 +11,21 @@ $apellidos = $_POST["apellidos"];
 $identificacion = $_POST["id"];
 $usuario = $_POST["usuario"];
 $contraseña = $_POST["contraseña"];
+$identificador = $_POST["identificador"]; // Agregar identificador
 
-// Actualizar datos en la base de datos (esto es solo un ejemplo, debes ajustarlo según tu estructura de base de datos)
-$sql = "UPDATE users SET name='$nombres', lastname='$apellidos', id='$identificacion', username='$usuario', password='$contraseña' WHERE id='$idUsuario'";
+// Hasheamos la contraseña usando password_hash
+$hashedPassword = password_hash($contraseña, PASSWORD_DEFAULT);
 
-if ($conn->query($sql) === TRUE) {
-    
+// Actualizar datos en la base de datos
+$sql = "UPDATE users SET name='$nombres', lastname='$apellidos', id='$identificacion', username='$usuario', password='$hashedPassword', identifier='$identificador' WHERE id='$idUsuario'";
+$query = mysqli_query($conn, $sql);
+
+if ($query) {
     Header("Location: ../html/editarUsuario.html");
 } else {
-    echo "Error al actualizar los datos: " . $conn->error;
+    echo "Error al actualizar los datos: " . mysqli_error($conn);
 }
+
 
 $conn->close();
 ?>

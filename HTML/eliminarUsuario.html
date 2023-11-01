@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/font-awesome.min.css">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="../css/pruebaCrear.css">
+    <title>Aquavida | Conexion Total 2023</title>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="row contenedor_logo_menu">
+                <div class="logo col-xs-12 col-md-6">
+                    <a href="index.html"><img src="../img/second (Personalizado).jfif" alt=""></a>
+                </div>
+                <div class="menu col-xs-12 col-md-6">
+                    <a href="Usuarios.html">Usuarios</a>
+                    <a href="#">Estadisticas</a>
+                    <a href="#">Otros</a>
+                </div>
+            </div>
+
+            <div class="row formulario">
+                <div class="principal col-xs-12 col-md-6">
+                    <h2>Eliminar Usuario</h2>
+                    <form action="../PHP/delete_user.php" method="POST">
+                        <div class="form-group">
+                            <label for="idUsuario">ID del Usuario:</label>
+                            <input type="text" class="form-control" id="idUsuario" name="idUsuario" required>
+                        </div>
+                        <button type="button" id="btnBuscarUsuario" class="btn btn-primary">Buscar Usuario</button>
+                        
+                        <!-- Mostrar los datos del usuario encontrado -->
+                        <div id="datosUsuario" style="display: none;">
+                            <div class="form-group">
+                                <label for="nombres">Nombres:</label>
+                                <input type="text" class="form-control" id="nombres" name="nombres" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="apellidos">Apellidos:</label>
+                                <input type="text" class="form-control" id="apellidos" name="apellidos" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="identificacion">Identificación:</label>
+                                <input type="text" class="form-control" id="id" name="id" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="usuario">Usuario:</label>
+                                <input type="text" class="form-control" id="usuario" name="usuario" readonly>
+                            </div>
+                            <button type="submit" id="btnEliminarUsuario" class="btn btn-primary">Eliminar Usuario</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <script>
+            window.addEventListener("load", function () {
+                document.getElementById("btnBuscarUsuario").addEventListener("click", function (event) {
+                    var idUsuario = document.getElementById("idUsuario").value;
+
+                    // Verificar si el campo idUsuario está vacío
+                    if (idUsuario.trim() === "") {
+                        alert("Por favor, ingrese un ID de usuario.");
+                        return; // Salir de la función si el campo está vacío
+                    }
+
+                    // Realiza una solicitud AJAX para obtener los datos del usuario
+                    var xhr = new XMLHttpRequest();
+                    xhr.open("POST", "../PHP/consult_users_data.php", true);
+                    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+                    xhr.onreadystatechange = function () {
+                        if (xhr.readyState === 4) {
+                            if (xhr.status === 200) {
+                                var respuesta = JSON.parse(xhr.responseText);
+                                if (respuesta.error) {
+                                    // El usuario no fue encontrado, muestra una alerta de error
+                                    alert(respuesta.error);
+                                    // Ocultar los datos del usuario
+                                    document.getElementById("datosUsuario").style.display = "none";
+                                } else {
+                                    // Mostrar los datos del usuario encontrado
+                                    document.getElementById("nombres").value = respuesta.nombres;
+                                    document.getElementById("apellidos").value = respuesta.apellidos;
+                                    document.getElementById("id").value = respuesta.id;
+                                    document.getElementById("usuario").value = respuesta.usuario;
+
+                                    // Mostrar el área de datos del usuario
+                                    document.getElementById("datosUsuario").style.display = "block";
+                                }
+                            } else {
+                                // Error en la solicitud AJAX
+                                alert("Error al buscar el usuario");
+                            }
+                        }
+                    };
+                    xhr.send("idUsuario=" + idUsuario);
+
+                    // Prevenir el envío del formulario
+                    event.preventDefault();
+                });
+
+                document.getElementById("btnEliminarUsuario").addEventListener("click", function () {
+                    var confirmacion = confirm("¿Estás seguro de que deseas eliminar este usuario?");
+                    if (confirmacion) {
+                        // Realizar una solicitud AJAX para eliminar el usuario
+                        var idUsuario = document.getElementById("idUsuario").value;
+
+                        var xhr = new XMLHttpRequest();
+                        xhr.open("POST", "../PHP/delete_user.php", true);
+                        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+                        xhr.onreadystatechange = function () {
+                            if (xhr.readyState === 4) {
+                                if (xhr.status === 200) {
+                                    var respuesta = JSON.parse(xhr.responseText);
+                                    if (respuesta.success) {
+                                        alert("El usuario se eliminó correctamente.");
+                                        // Limpiar los campos después de la eliminación
+                                        document.getElementById("nombres").value = "";
+                                        document.getElementById("apellidos").value = "";
+                                        document.getElementById("id").value = "";
+                                        document.getElementById("usuario").value = "";
+                                        document.getElementById("idUsuario").value = "";
+                                        // Ocultar los datos del usuario
+                                        document.getElementById("datosUsuario").style.display = "none";
+                                    } else {
+                                        alert("Error al eliminar el usuario.");
+                                    }
+                                } else {
+                                    // Error en la solicitud AJAX
+                                    alert("Error al eliminar el usuario");
+                                }
+                            }
+                        };
+                        xhr.send("idUsuario=" + idUsuario);
+                    }
+                });
+            });
+        </script>
+    </header>
+
+    <!-- Resto de tu contenido aquí -->
+
+</body>
+</html>

@@ -3,7 +3,8 @@
     // Incluir el archivo de conexión a la base de datos
     include("connection.php");
     $conn = connection();
-
+    
+    
     // Consultar los datos de la tabla "datos_sensores"
     $sql = "SELECT * FROM sensordata";
     $query = mysqli_query($conn, $sql);
@@ -22,7 +23,6 @@
         echo "<td>" . $row['reading_time'] . "</td>";
         echo "</tr>";
     }
-
         mysqli_close($conn);
 ?>
 

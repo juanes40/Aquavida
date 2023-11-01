@@ -37,7 +37,7 @@
                 </div>
                 <div class="menu col-xs-12 col-md-6">
                     <a href="../HTML/index.html">Inicio</a>
-                    <a href="#">Otros</a>
+                    
                 </div>
             </div>
         </div>
@@ -81,7 +81,7 @@
     </section>
     <script>
         // Utilizar JavaScript para cargar los datos desde sensores.php y mostrarlos en la tabla
-        fetch("../PHP/mostrar_datos.php")
+        fetch("../PHP/show_sensor_data.php")
             .then(response => response.text())
             .then(data => {
                 document.getElementById("tablaDatos").innerHTML = data;
