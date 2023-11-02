@@ -26,4 +26,11 @@ Creación de bd "Aqua_vida"
 
 CREATE DATABASE `Aqua_vida`;
 
+añadir las columnas a sensordata: agregar todos
+ALTER TABLE sensordata
+ADD sensor3 VARCHAR(30),
+ADD value3 VARCHAR(30),
+ADD tiempotemp VARCHAR(30),
+ADD tiemponivel VARCHAR(30),
+ADD tiempoph VARCHAR(30);
 
