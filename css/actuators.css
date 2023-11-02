@@ -18,7 +18,7 @@
   }
   header .contenedor_logo_menu {
     padding: 25px 0;
-    border: 1px solid rgba(255, 0, 0, 0.4);
+    border: 1px solid rgba(248, 219, 219, 0.4);
   }
   header .contenedor_logo_menu .logo a {
     display: block;
@@ -114,6 +114,65 @@
     margin-bottom: 30px;
     line-height: 28px;
   }
+  .main .caracteristicas .caracteristica .switch{
+    height: 80px;
+    width: 200px;
+    margin-left: 100px;
+    background-image: linear-gradient(to top, #5a967d 0%, #74bc9c 100%);
+    padding: 0 1.5rem;
+    border-radius: 0.75rem;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+
+    
+  }
+ 
+  .main .caracteristicas .caracteristica .switch .input {
+    display: none;
+  }
+  
+  .main .caracteristicas .caracteristica .switch .rail {
+    position: relative;
+    width: 88px;
+    height: 28px;
+    background-color: #fff;
+    border-radius: 3rem;
+  }
+  
+  .main .caracteristicas .caracteristica .switch .rail .circle {
+    display: block;
+    width: 36px;
+    height: 36px;
+    background-image: linear-gradient(to right, #054d36 0%,#054d36 100%);
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 0;
+    transition: transform 0.4s;
+  }
+  
+  .main .caracteristicas .caracteristica .switch .indicator {
+    width: 15px;
+    height: 15px;
+    background-color: #ffffff;
+    border-radius: 50%;
+    margin-left: 1.5rem;
+    transition: 0.4s;
+  }
+  
+  .main .caracteristicas .caracteristica .switch .input:checked ~ .rail .circle {
+    transform: translate(52px, -50%);
+  }
+  
+  .main .caracteristicas .caracteristica .switch .input:checked ~ .indicator {
+    background-color: #22ff00;
+  }
+
+
+
+
   .main .fotos {
     margin-bottom: 70px;
   }
@@ -405,4 +464,21 @@
   }
   
   /*# sourceMappingURL=estilos.css.map */
+  
+  .container1 {
+    min-height: 60vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-image: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  }
+  .container1 h1 {
+    padding: 2rem 0;
+    color: #fff;
+    font-size: 1.5rem;
+    text-align: center;
+    letter-spacing: 1px;
+  }
+  
   
