@@ -22,7 +22,8 @@
   int tiempoTemp = 1000;
   int tiempoNivel = 1000;
   int tiempoPH = 1000;
-
+  int buzzerPin = 27;
+  int notas[] = {262, 294, 330, 349, 392, 440, 494, 523};
   #define ONE_WIRE_BUS 5 // Pin donde está conectado el sensor DS18B20
   #define ANALOG_PIN 34 // Pin donde está conectado el sensor de nivel de agua (analógico)
   #define PH_SENSOR_PIN 32 // Pin donde está conectado el sensor de pH (analógico)
@@ -45,6 +46,7 @@
 
     // Inicializa el pin del sensor de pH
     pinMode(PH_SENSOR_PIN, INPUT);
+    pinMode(buzzerPin, OUTPUT);
   }
 
   void loop() {
@@ -88,7 +90,7 @@
       tiempoTemp = parts[0].toInt();
       tiempoNivel = parts[1].toInt();
       tiempoPH = parts[2].toInt();
-
+      
       http.end();
       delay(500);
       // Your Domain name with URL path or IP address with path
@@ -102,6 +104,25 @@
       float waterLevel = leerNivel(tiempoNivel);
       float ph = leerPH(tiempoPH);
 
+      if(temperatureCelsius > 29){
+        int melody[] = {3, 3, 4, 5, 5, 4, 3, 2, 1, 1, 2, 3, 3, 2, 2}; // Puedes ajustar las notas según tus preferencias
+        int duracionNota = 300;
+
+        for (int i = 0; i < sizeof(melody) / sizeof(melody[0]); i++) {
+          int nota = melody[i];
+          if (nota == 0) {
+      // Pausa
+          delay(duracionNota);
+          } else {
+      // Toca la nota
+            tone(buzzerPin, notas[nota - 1]);
+            delay(duracionNota);
+            noTone(buzzerPin);
+            delay(50); // Pequeña pausa entre las notas
+          }
+        }
+        delay(2000);
+      }
       String httpRequestData = "api_key=" + apiKeyValue + "&sensor1=" + sensorName1 +
                               "&location=" + sensorLocation + "&value1=" + String(temperatureCelsius) +
                               "&sensor2=" + sensorName2 + "&value2=" + String(waterLevel) +
