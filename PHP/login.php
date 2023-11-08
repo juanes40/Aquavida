@@ -1,21 +1,32 @@
 <?php
 include("connection.php");
 $conn = connection();
+include("cifrarDatos.php");
 
 // Obtiene los datos del formulario
 $usuario = $_POST["usuario"];
 $contraseña = $_POST["contraseña"];
+$clave = 'clave';
 
-// Consulta SQL para obtener el hash de la contraseña y el valor de "identifier" almacenado en la base de datos
-$sql = "SELECT password, identifier FROM users WHERE username='$usuario'";
+// Consulta SQL para obtener todos los registros de usuarios y sus contraseñas cifradas
+$sql = "SELECT username, password, identifier FROM users";
 $result = $conn->query($sql);
 
-if ($result->num_rows == 1) {
-    $row = $result->fetch_assoc();
+$usuarioDescifrado = null;
+while ($row = $result->fetch_assoc()) {
+    $usuarioCifrado = $row['username'];
+    $usuarioDescifrado = decryptData($usuarioCifrado, $clave);
+
+    if ($usuarioDescifrado == $usuario) {
+        break;  // Si se encuentra una coincidencia, sal del bucle
+    }
+}
+
+if ($usuarioDescifrado != null) {
+    // Ahora puedes proceder con la verificación de la contraseña
     $hashFromDatabase = $row['password'];
     $identifier = $row['identifier'];
 
-    // Verifica si la contraseña proporcionada coincide con el hash almacenado
     if (password_verify($contraseña, $hashFromDatabase)) {
         // Comprueba el valor de "identifier" y redirige al usuario según su valor
         if ($identifier == 0) {
@@ -39,4 +50,3 @@ if ($result->num_rows == 1) {
 // Cierra la conexión a la base de datos
 $conn->close();
 ?>
-
