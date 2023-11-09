@@ -8,7 +8,13 @@
   const char* password = "Juanes453";
 
   // REPLACE with your Domain name and URL path or IP address with path
-  const char* serverName = "http://192.168.51.128/Aquavida/PHP/post-esp-data.php";
+<<<<<<< HEAD
+  const char* serverName = "http://192.168.4.102/Aquavida/PHP/post-esp-data.php";
+=======
+
+  const char* serverName = "http://192.168.4.102/Aquavida/PHP/post-esp-data.php";
+
+>>>>>>> b26b7a3c280762bf09dacaf9e9dbf7d955c833ec
 
   // Keep this API Key value to be compatible with the PHP code provided in the project page.
   // If you change the apiKeyValue value, the PHP file /post-esp-data.php also needs to have the same key
@@ -22,8 +28,13 @@
   int tiempoTemp = 1000;
   int tiempoNivel = 1000;
   int tiempoPH = 1000;
+<<<<<<< HEAD
 
-  #define ONE_WIRE_BUS 4 // Pin donde está conectado el sensor DS18B20
+=======
+  int buzzerPin = 27;
+  int notas[] = {262, 294, 330, 349, 392, 440, 494, 523};
+>>>>>>> b26b7a3c280762bf09dacaf9e9dbf7d955c833ec
+  #define ONE_WIRE_BUS 5 // Pin donde está conectado el sensor DS18B20
   #define ANALOG_PIN 34 // Pin donde está conectado el sensor de nivel de agua (analógico)
   #define PH_SENSOR_PIN 32 // Pin donde está conectado el sensor de pH (analógico)
 
@@ -45,6 +56,7 @@
 
     // Inicializa el pin del sensor de pH
     pinMode(PH_SENSOR_PIN, INPUT);
+    pinMode(buzzerPin, OUTPUT);
   }
 
   void loop() {
@@ -53,7 +65,7 @@
       WiFiClient client;
       HTTPClient http;
       http.begin(client, serverName);
-      String serverPath = "http://192.168.51.102/Aquavida/PHP/get-esp-data.php";
+      String serverPath = "http://192.168.4.102/Aquavida/PHP/get-esp-data.php";
       String conectar = serverPath+"?api_key="+apiKeyValue+"&tiempo1=tiempotemp"+"&tiempo2=tiemponivel"+"&tiempo3=tiempoph";
       http.begin(client, conectar.c_str());
       http.addHeader("Content-Type", "application/x-www-form-urlencoded");
@@ -88,7 +100,7 @@
       tiempoTemp = parts[0].toInt();
       tiempoNivel = parts[1].toInt();
       tiempoPH = parts[2].toInt();
-
+      
       http.end();
       delay(500);
       // Your Domain name with URL path or IP address with path
@@ -102,6 +114,25 @@
       float waterLevel = leerNivel(tiempoNivel);
       float ph = leerPH(tiempoPH);
 
+      if(temperatureCelsius > 29){
+        int melody[] = {3, 3, 4, 5, 5, 4, 3, 2, 1, 1, 2, 3, 3, 2, 2}; // Puedes ajustar las notas según tus preferencias
+        int duracionNota = 300;
+
+        for (int i = 0; i < sizeof(melody) / sizeof(melody[0]); i++) {
+          int nota = melody[i];
+          if (nota == 0) {
+      // Pausa
+          delay(duracionNota);
+          } else {
+      // Toca la nota
+            tone(buzzerPin, notas[nota - 1]);
+            delay(duracionNota);
+            noTone(buzzerPin);
+            delay(50); // Pequeña pausa entre las notas
+          }
+        }
+        delay(2000);
+      }
       String httpRequestData = "api_key=" + apiKeyValue + "&sensor1=" + sensorName1 +
                               "&location=" + sensorLocation + "&value1=" + String(temperatureCelsius) +
                               "&sensor2=" + sensorName2 + "&value2=" + String(waterLevel) +

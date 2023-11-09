@@ -37,3 +37,10 @@ ADD tiempotemp VARCHAR(30),
 ADD tiemponivel VARCHAR(30),
 ADD tiempoph VARCHAR(30);
 
+
+
+CREATE TABLE registros_switch (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    switch_estado VARCHAR(10),
+    fecha_hora TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
