@@ -1,13 +1,16 @@
-Creación de tabla "users"
 
-CREATE TABLE `users` (
-  `id` int(20) NOT NULL,
-  `name` varchar(20) NOT NULL,
-  `lastname` varchar(20) NOT NULL,
-  `username` varchar(20) NOT NULL,
-  `password` varchar(255) NOT NULL,
-  PRIMARY KEY (`id`)
-) 
+SHOW CREATE TABLE users;
+
+users	CREATE TABLE `users` (
+  `id` int(10) NOT NULL,
+  `name` varchar(20) NOT NULL,
+  `lastname` varchar(20) NOT NULL,
+  `username` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `identifier` int(10) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci	
+
 
 creación de tabla "sensordata"
 
@@ -34,3 +37,10 @@ ADD tiempotemp VARCHAR(30),
 ADD tiemponivel VARCHAR(30),
 ADD tiempoph VARCHAR(30);
 
+
+
+CREATE TABLE registros_switch (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    switch_estado VARCHAR(10),
+    fecha_hora TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
