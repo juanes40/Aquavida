@@ -9,6 +9,7 @@ $username = "juanes";
 // REPLACE with Database user password
 $password = "";
 
+$email_address = "juanesbale53@gmail.com";
 // Keep this API Key value to be compatible with the ESP32 code provided in the project page. 
 // If you change this value, the ESP32 sketch needs to match
 $api_key_value = "tPmAT5Ab3j7F9";
@@ -45,7 +46,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         else {
             echo "Error: " . $sql . "<br>" . $conn->error;
         }
-    
+        $email_msg = "Temperatura:" . $value1;
+        $email_msg = wordwrap($email_msg, 70);
+        if($value1 > 20.0){
+            mail($email_address, "[NEW] ¡ALERTA! temperatura excedida", $email_msg);
+            echo "Email sent";
+        }
         $conn->close();
     }
     else {
