@@ -25,7 +25,7 @@
 
 			<div class="row formulario">
 				<div class="principal col-xs-12 col-md-6">
-                    <h2>Creación de Usuario</h2>
+                    <h2>Creación de Planta</h2>
 					<form action="../PHP/insert_plantas.php" method="POST" onsubmit="return validarFormulario()">
 						<div class="form-group">
 							<label for="nombre">Nombres:</label>
@@ -40,16 +40,12 @@
 							<input type="text" class="form-control" id="identificacion" name="identificacion" required>
 						</div>
 						<div class="form-group">
-							<label for="opciones">Selecciona un identificador:</label>
-							<select class="form-control" name="identificador" id="identificador">
-								<option value="0">0</option>
-								<option value="1">1</option>
-								
-							</select>
+							<label for="user_id">Identificación del usuario:</label>
+							<input type="text" class="form-control" id="user_id" name="user_id" required>
 						</div>
 
 						<div id="error-message" style="color: red;"></div>
-						<button type="submit" id="btnCrearUsuario" class="btn btn-primary">Crear Usuario</button>
+						<button type="submit" id="btnCrearPlanta" class="btn btn-primary">Crear Planta</button>
 					</form>
 				</div>
 			</div>
@@ -57,12 +53,10 @@
 		<script>
 			function validarFormulario() {
 				// Obtener los valores de los campos
-				var nombres = document.getElementById("nombres").value;
-				var apellidos = document.getElementById("apellidos").value;
+				var nombres = document.getElementById("nombre").value;
+				var apellidos = document.getElementById("tipo").value;
 				var identificacion = document.getElementById("identificacion").value;
-				var usuario = document.getElementById("usuario").value;
-				var contraseña = document.getElementById("contraseña").value;
-				var identificador = document.getElementById("identificador").value;
+				var user_id = document.getElementById("user_id").value;
 
 				console.log("Valor del ComboBox (identificador): " + identificador);
 
@@ -83,7 +77,7 @@
 				}
 
 				// Si todas las validaciones pasan, el formulario se enviará
-				alert("Usuario Creado Exitosamente");
+				alert("planta Creado Exitosamente");
 				return true;
 			}
 		</script>

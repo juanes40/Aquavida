@@ -4,14 +4,14 @@ include("connection.php");
 $conn = connection();
 
 // Obtener datos del formulario
-$idPlanta = $_POST["idUsuario"];
-$nombre = $_POST["nombres"];
-$tipo = $_POST["apellidos"];
-$user_id = $_POST["id"];
+$idPlanta = $_POST["idPlanta"];
+$nombre = $_POST["nombre"];
+$tipo = $_POST["tipo"];
+$user_id = $_POST["user_id"];
 
 
 //senstencia para eliminar usuario
-$sql = "DELETE FROM users WHERE id = '$idUsuario'";
+$sql = "DELETE FROM plantas WHERE id = '$idPlanta'";
 $query = mysqli_query($conn, $sql);
 
 if ($query) {
