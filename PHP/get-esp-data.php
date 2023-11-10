@@ -5,7 +5,7 @@ $servername = "localhost";
 // REPLACE with your Database name
 $dbname = "aqua_vida";
 // REPLACE with Database user
-$username = "juanes";
+$username = "root"; //cambiar usuario IMPORTANTEEE
 // REPLACE with Database user password
 $password = "";
 
@@ -13,7 +13,7 @@ $password = "";
 // If you change this value, the ESP32 sketch needs to match
 $api_key_value = "tPmAT5Ab3j7F9";
 
-$api_key= $sensor1 = $location = $value1 =$sensor2 = $value2 = $sensor3 = $value3 = $tiempotemp = $tiemponivel = $tiempoph = "";
+$api_key= $sensor1 = $location = $value1 =$sensor2 = $value2 = $sensor3 = $value3 = $tiempotemp = $tiemponivel = $tiempoph = $switch_estado = "";
 
 if ($_SERVER["REQUEST_METHOD"] == "GET") {
     $api_key = test_input($_GET["api_key"]);
@@ -21,6 +21,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
         $tiempotemp = test_input($_GET["tiempo1"]);
         $tiemponivel = test_input($_GET["tiempo2"]);
         $tiempoph = test_input($_GET["tiempo3"]);
+        $switch_estado = test_input($_GET["estadoLuz"]);
         $conn = new mysqli($servername, $username, $password, $dbname);
 
         if ($conn->connect_error) {
@@ -29,12 +30,21 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
         
         $sql = "SELECT * FROM sensordata ORDER BY id DESC LIMIT 1";
         if ($result = $conn->query($sql)) {
-            $row = mysqli_fetch_row($result);
-            $var = $row[9] . "," . $row[10] . "," . $row[11];
-            echo $var;
-            //echo "tiempo";
-        }
-        else {
+            $row_sensor = mysqli_fetch_row($result);
+        
+            // Obtener datos de la tabla actuador_luz
+            $sql_actuador = "SELECT * FROM actuadorluz ORDER BY id DESC LIMIT 1";
+            if ($result_actuador = $conn->query($sql_actuador)) {
+                $row_actuador = mysqli_fetch_row($result_actuador);
+        
+                // Concatenar datos de ambas tablas
+                $var = $row_sensor[9] . "," . $row_sensor[10] . "," . $row_sensor[11] . "," .
+                       $row_actuador[1];
+                echo $var;
+            } else {
+                echo false;
+            }
+        } else {
             echo false;
         }
     
