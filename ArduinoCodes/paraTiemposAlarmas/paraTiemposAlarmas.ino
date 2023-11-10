@@ -10,7 +10,7 @@
   // REPLACE with your Domain name and URL path or IP address with path
 
 
-  const char* serverName = "http://192.168.4.212/Aquavida/PHP/post-esp-data.php";
+  const char* serverName = "http://192.168.121.125/Aquavida/PHP/post-esp-data.php";
 
 
 
@@ -67,7 +67,7 @@
       WiFiClient client;
       HTTPClient http;
       http.begin(client, serverName);
-      String serverPath = "http://192.168.4.212/Aquavida/PHP/get-esp-data.php";
+      String serverPath = "http://192.168.121.125/Aquavida/PHP/get-esp-data.php";
       String conectar = serverPath+"?api_key="+apiKeyValue+"&tiempo1=tiempotemp"+"&tiempo2=tiemponivel"+"&tiempo3=tiempoph"+"&estadoLuz=switch_estado";
       http.begin(client, conectar.c_str());
       http.addHeader("Content-Type", "application/x-www-form-urlencoded");
