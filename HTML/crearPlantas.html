@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+	<link rel="stylesheet" href="../css/bootstrap.min.css">
+	<link rel="stylesheet" href="../css/font-awesome.min.css">
+	<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" href="../css/pruebaCrear.css">
+	<title>Aquavida | Conexion Total 2023</title>
+</head>
+<body>
+	<header>
+		<div class="container">
+			<div class="row contenedor_logo_menu">
+				<div class="logo col-xs-12 col-md-6">
+					<a href="index.html"><img src="../img/second (Personalizado).jfif" alt=""></a>
+				</div>
+				<div class="menu col-xs-12 col-md-6">
+					<a href="../HTML/Plantas.html">Plantas</a>
+					<a href="#">Estadisticas</a>
+					<a href="#">Otros</a>
+				</div>
+			</div>
+
+			<div class="row formulario">
+				<div class="principal col-xs-12 col-md-6">
+                    <h2>Creación de Usuario</h2>
+					<form action="../PHP/insert_plantas.php" method="POST" onsubmit="return validarFormulario()">
+						<div class="form-group">
+							<label for="nombre">Nombres:</label>
+							<input type="text" class="form-control" id="nombre" name="nombre" required>
+						</div>
+						<div class="form-group">
+							<label for="tipo">Tipo:</label>
+							<input type="text" class="form-control" id="tipo" name="tipo" required>
+						</div>
+						<div class="form-group">
+							<label for="identificacion">Identificación:</label>
+							<input type="text" class="form-control" id="identificacion" name="identificacion" required>
+						</div>
+						<div class="form-group">
+							<label for="opciones">Selecciona un identificador:</label>
+							<select class="form-control" name="identificador" id="identificador">
+								<option value="0">0</option>
+								<option value="1">1</option>
+								
+							</select>
+						</div>
+
+						<div id="error-message" style="color: red;"></div>
+						<button type="submit" id="btnCrearUsuario" class="btn btn-primary">Crear Usuario</button>
+					</form>
+				</div>
+			</div>
+		</div>
+		<script>
+			function validarFormulario() {
+				// Obtener los valores de los campos
+				var nombres = document.getElementById("nombres").value;
+				var apellidos = document.getElementById("apellidos").value;
+				var identificacion = document.getElementById("identificacion").value;
+				var usuario = document.getElementById("usuario").value;
+				var contraseña = document.getElementById("contraseña").value;
+				var identificador = document.getElementById("identificador").value;
+
+				console.log("Valor del ComboBox (identificador): " + identificador);
+
+				// Validar que la contraseña cumple con los requisitos
+				if (contraseña.length < 5) {
+					document.getElementById("error-message").textContent = "La contraseña debe tener al menos 5 caracteres.";
+					return false;
+				}
+
+				if (!/[a-z]/.test(contraseña) || !/[A-Z]/.test(contraseña)) {
+					document.getElementById("error-message").textContent = "La contraseña debe contener al menos una letra mayúscula y una letra minúscula.";
+					return false;
+				}
+
+				if (!/\d/.test(contraseña)) {
+					document.getElementById("error-message").textContent = "La contraseña debe contener al menos un carácter numérico.";
+					return false;
+				}
+
+				// Si todas las validaciones pasan, el formulario se enviará
+				alert("Usuario Creado Exitosamente");
+				return true;
+			}
+		</script>
+	</header>
+	<section class="main">
+		<!-- El resto de tu contenido aquí -->
+	</section>
+</body>
+</html>
