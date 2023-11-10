@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/font-awesome.min.css">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="../css/actuators.css">
+    <title>Aquavida | Conexion Total</title>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="row contenedor_logo_menu">
+                <div class="logo col-xs-12 col-md-6">
+                    <a href="index.html"><img src="../img/second (Personalizado).jfif" alt=""></a>
+                </div>
+                <div class="menu col-xs-12 col-md-6">
+                    <a href="../HTML/index.html">Inicio</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section class="main">
+        <section class="caracteristicas">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h3 class="titulo">Control Actuadores</h3>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-6 caracteristica">
+                        <img src="../img/luces.png" alt="" class="icono">
+                        <h4 class="primera_linea">Luces UV</h4>
+                        <p class="parrafo">Las luces Uv se encuentran ubicadas en la zona X, son las encargadas de desinfección, el control de plagas y la estimulación de defensas naturales en las plantas.</p>
+                        <form method="post" action="actuador.php">
+                            <label class="switch">
+								<input type="checkbox" class="input" name="switchValue" value="off">
+                                <div class="rail">
+                                    <span class="circle"></span>
+                                </div>
+                                <span class="indicator"></span>
+                            </label>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <script>
+            
+			document.addEventListener('DOMContentLoaded', function() {
+            const switchInput = document.querySelector('.input');
+            // Realizamos una petición al servidor para obtener el estado del switch desde la base de datos
+            fetch('../PHP/actuador.php')
+                .then(response => response.json())
+                .then(data => {
+                    const switchValue = data.switch_estado;
+
+                    // Si el switch_value obtenido es 'on', lo marcamos como activado
+                    if (switchValue === 'on') {
+                        switchInput.checked = true;
+                    } else {
+                        switchInput.checked = false;
+                    }
+                })
+                .catch(error => console.error(error));
+
+            switchInput.addEventListener('change', function(event) {
+                // Manejo del cambio de estado del switch
+                const newSwitchValue = this.checked ? 'on' : 'off';
+                fetch('../PHP/actuador.php', {
+                    method: 'POST',
+                    body: new URLSearchParams({
+                        switchValue: newSwitchValue
+                    })
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        // Aquí se pueden realizar más acciones con la respuesta si es necesario
+                    })
+                    .catch(error => console.error(error));
+            });
+        });
+   
+
+        </script>
+    </section>
+</body>
+</html>
