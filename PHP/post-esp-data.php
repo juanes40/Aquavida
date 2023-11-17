@@ -59,10 +59,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             echo "Error: " . $sql1 . "<br>" . $conn->error;
         }
 
-        $email_msg = "Temperatura:" . $value1;
+        $email_msg = "Temperatura: " . $value1 . " PH: " . $value3;
+
         $email_msg = wordwrap($email_msg, 70);
         if($value1 > 20.0){
-            mail($email_address, "[NEW] ¡ALERTA! temperatura excedida", $email_msg);
+            mail($email_address, "[NEW] ¡ALERTA! temperatura y ph excedidos", $email_msg);
             echo "Email sent";
         }
         $conn->close();
