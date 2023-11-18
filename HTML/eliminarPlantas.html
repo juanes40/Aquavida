@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/font-awesome.min.css">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="../css/pruebaCrear.css">
+    <title>Aquavida | Conexion Total 2023</title>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="row contenedor_logo_menu">
+                <div class="logo col-xs-12 col-md-6">
+                    <a href="index.html"><img src="../img/second (Personalizado).jfif" alt=""></a>
+                </div>
+                <div class="menu col-xs-12 col-md-6">
+                    <a href="Plantas.html">Plantas</a>
+                    <a href="#">Estadisticas</a>
+                    <a href="#">Otros</a>
+                </div>
+            </div>
+
+            <div class="row formulario">
+                <div class="principal col-xs-12 col-md-6">
+                    <h2>Eliminar Planta</h2>
+                    <form action="../PHP/delete_plantas.php" method="POST">
+                        <div class="form-group">
+                            <label for="idPlanta">ID de la Planta:</label>
+                            <input type="text" class="form-control" id="idPlanta" name="idPlanta" required>
+                        </div>
+                        <button type="button" id="btnBuscarPlanta" class="btn btn-primary">Buscar Planta</button>
+                        <button type="submit" id="btnEliminarPlanta" class="btn btn-danger">Eliminar Planta</button>
+                        
+                        <!-- Mostrar los datos de la planta encontrada -->
+                        <div id="datosPlanta" style="display: none;">
+                            <div class="form-group">
+                                <label for="nombre">Nombre:</label>
+                                <input type="text" class="form-control" id="nombre" name="nombre" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="tipo">Tipo:</label>
+                                <input type="text" class="form-control" id="tipo" name="tipo" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="identificacion">Identificación:</label>
+                                <input type="text" class="form-control" id="identificacion" name="identificacion" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="user_id">Identificación del usuario:</label>
+                                <input type="text" class="form-control" id="user_id" name="user_id" readonly>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <script>
+            window.addEventListener("load", function () {
+                document.getElementById("btnBuscarPlanta").addEventListener("click", function (event) {
+                    var idPlanta = document.getElementById("idPlanta").value;
+
+                    // Verificar si el campo idPlanta está vacío
+                    if (idPlanta.trim() === "") {
+                        alert("Por favor, ingrese un ID de planta.");
+                        return; // Salir de la función si el campo está vacío
+                    }
+
+                    // Realizar una solicitud AJAX para obtener los datos de la planta
+                    var xhr = new XMLHttpRequest();
+                    xhr.open("POST", "../PHP/consult_plantas_data.php", true);
+                    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+                    xhr.onreadystatechange = function () {
+                        if (xhr.readyState === 4) {
+                            if (xhr.status === 200) {
+                                var respuesta = JSON.parse(xhr.responseText);
+                                if (respuesta.error) {
+                                    // La planta no fue encontrada, muestra una alerta de error
+                                    alert(respuesta.error);
+                                    // Ocultar los datos de la planta
+                                    document.getElementById("datosPlanta").style.display = "none";
+                                } else {
+                                    // Mostrar los datos de la planta encontrada
+                                    document.getElementById("nombre").value = respuesta.nombre;
+                                    document.getElementById("tipo").value = respuesta.tipo;
+                                    document.getElementById("identificacion").value = respuesta.identificacion;
+                                    document.getElementById("user_id").value = respuesta.user_id;
+
+                                    // Mostrar el área de datos de la planta
+                                    document.getElementById("datosPlanta").style.display = "block";
+                                }
+                            } else {
+                                // Error en la solicitud AJAX
+                                alert("Error al buscar la planta");
+                            }
+                        }
+                    };
+                    xhr.send("idPlanta=" + idPlanta);
+
+                    // Prevenir el envío del formulario
+                    event.preventDefault();
+                });
+
+                document.getElementById("btnEliminarPlanta").addEventListener("click", function () {
+                    var confirmacion = confirm("¿Estás seguro de que deseas eliminar esta planta?");
+                    if (confirmacion) {
+                        // Realizar una solicitud AJAX para eliminar la planta
+                        var idPlanta = document.getElementById("idPlanta").value;
+
+                        var xhr = new XMLHttpRequest();
+                        xhr.open("POST", "../PHP/delete_plantas.php", true);
+                        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+                        xhr.onreadystatechange = function () {
+                            if (xhr.readyState === 4) {
+                                if (xhr.status === 200) {
+                                    var respuesta = JSON.parse(xhr.responseText);
+                                    if (respuesta.success) {
+                                        alert("La planta se eliminó correctamente.");
+                                        // Limpiar los campos después de la eliminación
+                                        document.getElementById("nombre").value = "";
+                                        document.getElementById("tipo").value = "";
+                                        document.getElementById("identificacion").value = "";
+                                        document.getElementById("user_id").value = "";
+                                        // Ocultar los datos de la planta
+                                        document.getElementById("datosPlanta").style.display = "none";
+                                    } else {
+                                        alert("Error al eliminar la planta.");
+                                    }
+                                } else {
+                                    // Error en la solicitud AJAX
+                                    alert("Error al eliminar la planta");
+                                }
+                            }
+                        };
+                        xhr.send("idPlanta=" + idPlanta);
+                    }
+                });
+            });
+        </script>
+    </header>
+</body>
+</html>

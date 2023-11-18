@@ -2,8 +2,8 @@
 include("connection.php");
 $conn = connection();
 
-if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['switchValue'])) {
-    $newEstado = $_POST['switchValue'];
+if ($_SERVER["REQUEST_METHOD"] === "POST" || isset($_POST['switchValue'])) {
+    $newEstado = isset($_POST['switchValue']) ? $_POST['switchValue']: null;
 
     $sql = "UPDATE actuadorLuz SET switch_estado = '$newEstado' ORDER BY id DESC LIMIT 1";
 
