@@ -70,7 +70,7 @@
 
                     // Realizar una solicitud AJAX para obtener los datos de la planta
                     var xhr = new XMLHttpRequest();
-                    xhr.open("POST", "../PHP/consult_plantas_data.php", true);
+                    xhr.open("POST", "../PHP/consult_plant_data.php", true);
                     xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
                     xhr.onreadystatechange = function () {
                         if (xhr.readyState === 4) {
@@ -85,7 +85,7 @@
                                     // Mostrar los datos de la planta encontrada
                                     document.getElementById("nombre").value = respuesta.nombre;
                                     document.getElementById("tipo").value = respuesta.tipo;
-                                    document.getElementById("identificacion").value = respuesta.identificacion;
+                                    document.getElementById("identificacion").value = respuesta.id;
                                     document.getElementById("user_id").value = respuesta.user_id;
 
                                     // Mostrar el área de datos de la planta

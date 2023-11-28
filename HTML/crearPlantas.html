@@ -1,89 +1,111 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-	<link rel="stylesheet" href="../css/bootstrap.min.css">
-	<link rel="stylesheet" href="../css/font-awesome.min.css">
-	<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700' rel='stylesheet' type='text/css'>
-	<link rel="stylesheet" href="../css/pruebaCrear.css">
-	<title>Aquavida | Conexion Total 2023</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/font-awesome.min.css">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="../css/pruebaCrear.css">
+    <title>Aquavida | Conexion Total 2023</title>
 </head>
 <body>
-	<header>
-		<div class="container">
-			<div class="row contenedor_logo_menu">
-				<div class="logo col-xs-12 col-md-6">
-					<a href="index.html"><img src="../img/second (Personalizado).jfif" alt=""></a>
-				</div>
-				<div class="menu col-xs-12 col-md-6">
-					<a href="../HTML/Plantas.html">Plantas</a>
-					<a href="#">Estadisticas</a>
-					<a href="#">Otros</a>
-				</div>
-			</div>
+    <header>
+        <div class="container">
+            <div class="row contenedor_logo_menu">
+                <!-- ... Código del logo y menú ... -->
+            </div>
 
-			<div class="row formulario">
-				<div class="principal col-xs-12 col-md-6">
+            <div class="row formulario">
+                <div class="principal col-xs-12 col-md-6">
                     <h2>Creación de Planta</h2>
-					<form action="../PHP/insert_plantas.php" method="POST" onsubmit="return validarFormulario()">
-						<div class="form-group">
-							<label for="nombre">Nombres:</label>
-							<input type="text" class="form-control" id="nombre" name="nombre" required>
-						</div>
-						<div class="form-group">
-							<label for="tipo">Tipo:</label>
-							<input type="text" class="form-control" id="tipo" name="tipo" required>
-						</div>
-						<div class="form-group">
-							<label for="identificacion">Identificación:</label>
-							<input type="text" class="form-control" id="identificacion" name="identificacion" required>
-						</div>
-						<div class="form-group">
-							<label for="user_id">Identificación del usuario:</label>
-							<input type="text" class="form-control" id="user_id" name="user_id" required>
-						</div>
+                    <form action="../PHP/insert_plantas.php" method="POST" onsubmit="return validarFormulario()">
+                        <div class="form-group">
+                            <label for="nombre">Nombres:</label>
+                            <input type="text" class="form-control" id="nombre" name="nombre" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="tipo">Tipo:</label>
+                            <input type="text" class="form-control" id="tipo" name="tipo" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="identificacion">Identificación:</label>
+                            <input type="text" class="form-control" id="identificacion" name="identificacion" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="user_id">Identificación del usuario:</label>
+                            <select class="form-control" id="user_id" name="user_id" required>
+                                <!-- Options se llenarán dinámicamente usando JavaScript -->
+                            </select>
+                        </div>
 
-						<div id="error-message" style="color: red;"></div>
-						<button type="submit" id="btnCrearPlanta" class="btn btn-primary">Crear Planta</button>
-					</form>
-				</div>
-			</div>
-		</div>
-		<script>
-			function validarFormulario() {
-				// Obtener los valores de los campos
-				var nombres = document.getElementById("nombre").value;
-				var apellidos = document.getElementById("tipo").value;
-				var identificacion = document.getElementById("identificacion").value;
-				var user_id = document.getElementById("user_id").value;
+                        <div id="error-message" style="color: red;"></div>
+                        <button type="submit" id="btnCrearPlanta" class="btn btn-primary">Crear Planta</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <script>
+             // Obtener las IDs de usuarios mediante una solicitud AJAX a PHP
+             fetch('../PHP/get_user_ids.php')
+                .then(response => response.json())
+                .then(data => {
+                    const select = document.getElementById('user_id');
+                    data.forEach(id => {
+                        const option = document.createElement('option');
+                        option.value = id;
+                        option.textContent = id;
+                        select.appendChild(option);
+                    });
+                })
+                .catch(error => console.error('Error:', error));
 
-				console.log("Valor del ComboBox (identificador): " + identificador);
 
-				// Validar que la contraseña cumple con los requisitos
-				if (contraseña.length < 5) {
-					document.getElementById("error-message").textContent = "La contraseña debe tener al menos 5 caracteres.";
-					return false;
-				}
+            function validarFormulario() {
+                var nombres = document.getElementById("nombre").value;
+                var tipo = document.getElementById("tipo").value;
+                var identificacion = document.getElementById("identificacion").value;
+                var user_id = document.getElementById("user_id").value;
 
-				if (!/[a-z]/.test(contraseña) || !/[A-Z]/.test(contraseña)) {
-					document.getElementById("error-message").textContent = "La contraseña debe contener al menos una letra mayúscula y una letra minúscula.";
-					return false;
-				}
+                // Verificar que ningún campo esté vacío
+                if (nombres === '' || tipo === '' || identificacion === '' || user_id === '') {
+                    document.getElementById("error-message").textContent = "Por favor, completa todos los campos.";
+                    return false;
+                }
 
-				if (!/\d/.test(contraseña)) {
-					document.getElementById("error-message").textContent = "La contraseña debe contener al menos un carácter numérico.";
-					return false;
-				}
+                // Si todas las validaciones pasan, el formulario se enviará
+                alert("Planta creada exitosamente");
+                return true;
+            }
 
-				// Si todas las validaciones pasan, el formulario se enviará
-				alert("planta Creado Exitosamente");
-				return true;
-			}
-		</script>
-	</header>
-	<section class="main">
-		<!-- El resto de tu contenido aquí -->
-	</section>
+            document.querySelector('form').addEventListener('submit', function(event) {
+            event.preventDefault(); // Evitar que el formulario se envíe por defecto
+
+            // Obtener los datos del formulario
+            var formData = new FormData(this);
+
+            // Enviar los datos del formulario usando fetch y método POST
+            fetch('../PHP/insert_plantas.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => {
+                if (response.ok) {
+                    alert('Planta creada exitosamente');
+                    window.location.href = '../HTML/crearPlantas.html'; // Redirigir a la página de plantas
+                } else {
+                    throw new Error('Error al crear la planta');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                document.getElementById("error-message").textContent = "Error al crear la planta";
+            });
+        });
+        </script>
+    </header>
+    <section class="main">
+    
+    </section>
 </body>
 </html>
