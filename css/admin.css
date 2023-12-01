@@ -18,7 +18,7 @@
   }
   header .contenedor_logo_menu {
     padding: 25px 0;
-    border: 1px solid rgba(255, 0, 0, 0.4);
+    border: 1px solid rgb(255, 255, 255);
   }
   header .contenedor_logo_menu .logo a {
     display: block;
@@ -35,6 +35,7 @@
     margin-left: 60px;
     font-size: 18px;
   }
+  
   header .textos {
     color: #fff;
     text-align: center;
@@ -114,6 +115,7 @@
     margin-bottom: 30px;
     line-height: 28px;
   }
+  
   .main .fotos {
     margin-bottom: 70px;
   }
