@@ -9,7 +9,7 @@
 
   // REPLACE with your Domain name and URL path or IP address with path
 
-  const char* serverName = "http://192.168.4.102/Aquavida/PHP/post-esp-data.php";
+  const char* serverName = "http://192.168.246.102/Aquavida/PHP/post-esp-data.php";
 
   // Keep this API Key value to be compatible with the PHP code provided in the project page.
   // If you change the apiKeyValue value, the PHP file /post-esp-data.php also needs to have the same key
@@ -64,7 +64,7 @@
       WiFiClient client;
       HTTPClient http;
       http.begin(client, serverName);
-      String serverPath = "http://192.168.4.102/Aquavida/PHP/get-esp-data.php";
+      String serverPath = "http://192.168.246.102/Aquavida/PHP/get-esp-data.php";
 
       String conectar = serverPath+"?api_key="+apiKeyValue+"&tiempo1=tiempotemp"+"&tiempo2=tiemponivel"+"&tiempo3=tiempoph"+"&estadoLuz=switch_estado";
       http.begin(client, conectar.c_str());
@@ -130,7 +130,7 @@
 
 
 
-      if(temperatureCelsius > 25){
+      if(temperatureCelsius > 22){
         int melody[] = {3, 3, 4, 5, 5, 4, 3, 2, 1, 1, 2, 3, 3, 2, 2}; // Puedes ajustar las notas según tus preferencias
         int duracionNota = 300;
 
