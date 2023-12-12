@@ -5,7 +5,7 @@ $servername = "localhost";
 // REPLACE with your Database name
 $dbname = "aqua_vida";
 // REPLACE with Database user
-$username = "juanes";
+$username = "root";
 // REPLACE with Database user password
 $password = "";
 
@@ -29,6 +29,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $tiempotemp = test_input($_POST["tiempotemp"]);
         $tiemponivel = test_input($_POST["tiemponivel"]);
         $tiempoph = test_input($_POST["tiempoph"]);
+        $switch_estado = test_input($_POST["switch_estado"]);
         
         $conn = new mysqli($servername, $username, $password, $dbname);
 
@@ -39,6 +40,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $sql = "INSERT INTO SensorData (sensor1, location, value1, sensor2, value2, sensor3, value3, tiempotemp, tiemponivel, tiempoph)
         VALUES ('$sensor1', '$location', '$value1', '$sensor2', '$value2', '$sensor3', '$value3', '$tiempotemp', '$tiemponivel', '$tiempoph')";
 
+
         //echo $sql;
         if ($conn->query($sql) === TRUE) {
             echo "New record created successfully";
@@ -48,10 +50,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
 
 
+
         $email_msg = "Temperatura:" . $value1;
+
+        $email_msg = "Temperatura: " . $value1 . " PH: " . $value3;
+
+
         $email_msg = wordwrap($email_msg, 70);
         if($value1 > 20.0){
-            mail($email_address, "[NEW] ¡ALERTA! temperatura excedida", $email_msg);
+            mail($email_address, "[NEW] ¡ALERTA! temperatura y ph excedidos", $email_msg);
             echo "Email sent";
         }
         $conn->close();
