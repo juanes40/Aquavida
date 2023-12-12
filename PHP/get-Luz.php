@@ -5,7 +5,7 @@ $servername = "localhost";
 // REPLACE with your Database name
 $dbname = "aqua_vida";
 // REPLACE with Database user
-$username = "root"; //cambiar usuario IMPORTANTEEE
+$username = "juanes";
 // REPLACE with Database user password
 $password = "";
 
@@ -13,14 +13,11 @@ $password = "";
 // If you change this value, the ESP32 sketch needs to match
 $api_key_value = "tPmAT5Ab3j7F9";
 
-$api_key= $sensor1 = $location = $value1 =$sensor2 = $value2 = $sensor3 = $value3 = $tiempotemp = $tiemponivel = $tiempoph = $switch_estado = "";
+$api_key = $switch_estado = "";
 
 if ($_SERVER["REQUEST_METHOD"] == "GET") {
     $api_key = test_input($_GET["api_key"]);
     if($api_key == $api_key_value) {
-        $tiempotemp = test_input($_GET["tiempo1"]);
-        $tiemponivel = test_input($_GET["tiempo2"]);
-        $tiempoph = test_input($_GET["tiempo3"]);
         $switch_estado = test_input($_GET["estadoLuz"]);
         $conn = new mysqli($servername, $username, $password, $dbname);
 
@@ -28,20 +25,18 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
             die("Connection failed: " . $conn->connect_error);
         } 
         
-        $sql = "SELECT * FROM sensordata ORDER BY id DESC LIMIT 1";
-        if ($result = $conn->query($sql)) {
-            $row_sensor = mysqli_fetch_row($result);
         
-
+            $sql_actuador = "SELECT * FROM actuadorluz ORDER BY id DESC LIMIT 1";
+            if ($result_actuador = $conn->query($sql_actuador)) {
+                $row_actuador = mysqli_fetch_row($result_actuador);
+        
                 // Concatenar datos de ambas tablas
-                $var = $row_sensor[9] . "," . $row_sensor[10] . "," . $row_sensor[11];
+                $var = $row_actuador[1];
                 echo $var;
-            
-        }
-        else {
-
-            echo false;
-        }
+            } else {
+                echo false;
+            }
+        
     
         $conn->close();
     }
