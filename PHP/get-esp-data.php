@@ -13,7 +13,7 @@ $password = "";
 // If you change this value, the ESP32 sketch needs to match
 $api_key_value = "tPmAT5Ab3j7F9";
 
-$api_key= $sensor1 = $location = $value1 =$sensor2 = $value2 = $sensor3 = $value3 = $tiempotemp = $tiemponivel = $tiempoph = $switch_estado = "";
+$api_key= $sensor1 = $location = $value1 =$sensor2 = $value2 = $sensor3 = $value3 = $tiempotemp = $tiemponivel = $tiempoph = "";
 
 if ($_SERVER["REQUEST_METHOD"] == "GET") {
     $api_key = test_input($_GET["api_key"]);
@@ -21,7 +21,6 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
         $tiempotemp = test_input($_GET["tiempo1"]);
         $tiemponivel = test_input($_GET["tiempo2"]);
         $tiempoph = test_input($_GET["tiempo3"]);
-        $switch_estado = test_input($_GET["estadoLuz"]);
         $conn = new mysqli($servername, $username, $password, $dbname);
 
         if ($conn->connect_error) {

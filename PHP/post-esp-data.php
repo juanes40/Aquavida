@@ -29,7 +29,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $tiempotemp = test_input($_POST["tiempotemp"]);
         $tiemponivel = test_input($_POST["tiemponivel"]);
         $tiempoph = test_input($_POST["tiempoph"]);
-        $switch_estado = test_input($_POST["switch_estado"]);
         
         $conn = new mysqli($servername, $username, $password, $dbname);
 
