@@ -9,7 +9,7 @@
 
   // REPLACE with your Domain name and URL path or IP address with path
 
-  const char* serverName = "http://192.168.246.102/Aquavida/PHP/post-esp-data.php";
+  const char* serverName = "http://192.168.21.102/Aquavida/PHP/post-esp-data.php";
 
   // Keep this API Key value to be compatible with the PHP code provided in the project page.
   // If you change the apiKeyValue value, the PHP file /post-esp-data.php also needs to have the same key
@@ -131,7 +131,7 @@
 
 
       http.begin(client, serverName);
-      String serverPath = "http://192.168.246.102/Aquavida/PHP/get-esp-data.php";
+      String serverPath = "http://192.168.21.102/Aquavida/PHP/get-esp-data.php";
 
       String conectar = serverPath+"?api_key="+apiKeyValue+"&tiempo1=tiempotemp"+"&tiempo2=tiemponivel"+"&tiempo3=tiempoph"+"&estadoLuz=switch_estado";
       http.begin(client, conectar.c_str());
