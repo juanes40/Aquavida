@@ -58,6 +58,17 @@
     cursor: pointer;
     transition: background-color 0.3s ease; /* Transición suave al pasar el ratón */
   }
+
+  header .formulario .principal .btn-secundary {
+    background-color: yellow; /* Color de fondo */
+    border: none;
+    color: #fff; /* Color del texto */
+    font-size: 18px;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease; /* Transición suave al pasar el ratón */
+  }
   header .formulario .principal .btn-primary:hover {
     background-color: #005229; /* Cambiar color al pasar el ratón */
   }
