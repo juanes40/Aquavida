@@ -63,50 +63,8 @@
     if (WiFi.status() == WL_CONNECTED) {
       WiFiClient client;
       HTTPClient http;
-      http.begin(client, serverName);
-      String serverPath = "http://192.168.246.102/Aquavida/PHP/get-esp-data.php";
-
-      String conectar = serverPath+"?api_key="+apiKeyValue+"&tiempo1=tiempotemp"+"&tiempo2=tiemponivel"+"&tiempo3=tiempoph"+"&estadoLuz=switch_estado";
-      http.begin(client, conectar.c_str());
-      http.addHeader("Content-Type", "application/x-www-form-urlencoded");
-      int httpResponseCodeGet = http.GET();
-
-      if (httpResponseCodeGet>0) {
-        Serial.print("HTTP Response code GET: ");
-        Serial.println(httpResponseCodeGet);
-        
-      }
-      else {
-        Serial.print("Error code GET: ");
-        Serial.println(httpResponseCodeGet);
-      }
-      // Realiza la solicitud HTTP GET y obtiene la respuesta
-      String response = http.getString();
-
-// Divide la respuesta en partes usando la coma como delimitador
-      String parts[4];
-      int index = 0;
-      int lastIndex = 0;
-      for (int i = 0; i < response.length(); i++) {
-        if (response.charAt(i) == ',') {
-        parts[index] = response.substring(lastIndex, i); // Obtiene la parte entre comas
-        index++;
-        lastIndex = i + 1;
-      }
-    }
-    parts[index] = response.substring(lastIndex); // La última parte después de la última coma
-
-// Convierte las partes en enteros
-      tiempoTemp = parts[0].toInt();
-      tiempoNivel = parts[1].toInt();
-      tiempoPH = parts[2].toInt();
-      activacionLuz =parts[3];
-      http.end();
-      delay(500);
-      //=======================================================================================
       // Your Domain name with URL path or IP address with path
       http.begin(client, serverName);
-
       // Specify content-type header
       http.addHeader("Content-Type", "application/x-www-form-urlencoded");
 
@@ -126,10 +84,6 @@
       }else{
         Serial.println("ERRORRRRRRR");
       }
-
-
-
-
       if(temperatureCelsius > 22){
         int melody[] = {3, 3, 4, 5, 5, 4, 3, 2, 1, 1, 2, 3, 3, 2, 2}; // Puedes ajustar las notas según tus preferencias
         int duracionNota = 300;
@@ -174,6 +128,57 @@
 
       // Free resources
       http.end();
+
+
+      http.begin(client, serverName);
+      String serverPath = "http://192.168.246.102/Aquavida/PHP/get-esp-data.php";
+
+      String conectar = serverPath+"?api_key="+apiKeyValue+"&tiempo1=tiempotemp"+"&tiempo2=tiemponivel"+"&tiempo3=tiempoph"+"&estadoLuz=switch_estado";
+      http.begin(client, conectar.c_str());
+      http.addHeader("Content-Type", "application/x-www-form-urlencoded");
+      int httpResponseCodeGet = http.GET();
+
+      if (httpResponseCodeGet>0) {
+        Serial.print("HTTP Response code GET: ");
+        Serial.println(httpResponseCodeGet);
+        
+      }
+      else {
+        Serial.print("Error code GET: ");
+        Serial.println(httpResponseCodeGet);
+      }
+      // Realiza la solicitud HTTP GET y obtiene la respuesta
+      String response = http.getString();
+
+// Divide la respuesta en partes usando la coma como delimitador
+      String parts[4];
+      int index = 0;
+      int lastIndex = 0;
+      for (int i = 0; i < response.length(); i++) {
+        if (response.charAt(i) == ',') {
+        parts[index] = response.substring(lastIndex, i); // Obtiene la parte entre comas
+        index++;
+        lastIndex = i + 1;
+      }
+    }
+    parts[index] = response.substring(lastIndex); // La última parte después de la última coma
+
+// Convierte las partes en enteros
+      //Temperatura
+      tiempoTemp = parts[0].toInt();
+
+      //Nivel
+      tiempoNivel = parts[1].toInt();
+
+      //PH
+      tiempoPH = parts[2].toInt();
+
+      //Luz
+      activacionLuz =parts[3];
+      http.end();
+      delay(500);
+      //=======================================================================================
+      
     } else {
       Serial.println("WiFi Disconnected");
     }
@@ -189,12 +194,12 @@
       //Encendemos el led
       digitalWrite(pin_dos, HIGH);
       alarma = "Encendida" ;
-      delay(1000);
+      delay(100);
     }else{
       //Apagamos el led
       digitalWrite(pin_dos, LOW);
       alarma = "Apagada" ;
-      delay(1000);
+      delay(100);
     }
     return temperatureCelsius;
     delay(tiempoTemp);

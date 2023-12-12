@@ -15,7 +15,7 @@ $sql = "DELETE FROM plantas WHERE id = '$idPlanta'";
 $query = mysqli_query($conn, $sql);
 
 if ($query) {
-    Header("Location: ../html/eliminarUsuario.html");
+    Header("Location: ../html/eliminarPlantas.html");
 } else {
     echo "Error al actualizar los datos: " . $conn->error;
 }
