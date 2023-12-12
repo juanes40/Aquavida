@@ -4,14 +4,16 @@
   }
   
   body {
+    background: url(img/bgAdmin.jpg);
+    background-size: cover;
     font-family: "Open Sans", Arial, Sans-serif;
     font-size: 16px;
   }
   
   /* ----- ----- HEADER ----- ----- */
   header {
-    background: url(../img/bgAdmin.jpg);
-    background-size: cover;
+    /*background: url(img/bgAdmin.jpg);
+    background-size: cover;*/
     background-color: rgba(255, 255, 255, 0.2);
     background-position: center 0;
     background-repeat: no-repeat;
