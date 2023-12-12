@@ -14,7 +14,7 @@ $email_address = "juanesbale53@gmail.com";
 // If you change this value, the ESP32 sketch needs to match
 $api_key_value = "tPmAT5Ab3j7F9";
 
-$api_key= $sensor1 = $location = $value1 =$sensor2 = $value2 = $sensor3 = $value3 = $tiempotemp = $tiemponivel = $tiempoph = "";
+$api_key= $sensor1 = $location = $value1 =$sensor2 = $value2 = $sensor3 = $value3 = $tiempotemp = $tiemponivel = $tiempoph ="";
 //echo $_SERVER["REQUEST_METHOD"];
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $api_key = test_input($_POST["api_key"]);
@@ -46,6 +46,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         else {
             echo "Error: " . $sql . "<br>" . $conn->error;
         }
+
+
         $email_msg = "Temperatura:" . $value1;
         $email_msg = wordwrap($email_msg, 70);
         if($value1 > 20.0){

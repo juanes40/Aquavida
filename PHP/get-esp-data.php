@@ -29,10 +29,12 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
         
         $sql = "SELECT * FROM sensordata ORDER BY id DESC LIMIT 1";
         if ($result = $conn->query($sql)) {
-            $row = mysqli_fetch_row($result);
-            $var = $row[9] . "," . $row[10] . "," . $row[11];
-            echo $var;
-            //echo "tiempo";
+            $row_sensor = mysqli_fetch_row($result);
+        
+                // Concatenar datos de ambas tablas
+                $var = $row_sensor[9] . "," . $row_sensor[10] . "," . $row_sensor[11];
+                echo $var;
+            
         }
         else {
             echo false;
