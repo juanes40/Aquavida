@@ -1,38 +1,72 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
-    <title>Gráficos de SensorData</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/font-awesome.min.css">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="../css/actuators.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <title>Aquavida | Conexion Total</title>
 </head>
 <body>
-    <canvas id="myChart" width="800" height="400"></canvas>
+    <header>
+        <!-- Tu código de encabezado -->
+    </header>
+
+    <section class="main">
+        <section class="caracteristicas">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h3 class="titulo">Estadisticas</h3>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <!-- Sección para cada gráfica -->
+                    <div class="col-md-4">
+                        <canvas id="chartValue1" width="400" height="200"></canvas>
+                    </div>
+                    <div class="col-md-4">
+                        <canvas id="chartValue2" width="400" height="200"></canvas>
+                    </div>
+                    <div class="col-md-4">
+                        <canvas id="chartValue3" width="400" height="200"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </section>
 
     <script>
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
                 var dataFromPHP = JSON.parse(this.responseText);
-                createChart(dataFromPHP);
+                createCharts(dataFromPHP);
             }
         };
         xhttp.open("GET", "../PHP/estadis.php", true);
         xhttp.send();
 
-        function createChart(data) {
-            var labels = [];
+        function createCharts(data) {
+            
             var value1Data = [];
             var value2Data = [];
             var value3Data = [];
-
+            var labels = Array.from({ length: data.length }, (_, index) => index);
             data.forEach(function(item) {
-                labels.push(item.tiempotemp);
+                
                 value1Data.push(item.value1);
                 value2Data.push(item.value2);
                 value3Data.push(item.value3);
             });
 
-            var ctx = document.getElementById('myChart').getContext('2d');
-            var myChart = new Chart(ctx, {
+            // Crear gráfica para Value 1
+            var ctxValue1 = document.getElementById('chartValue1').getContext('2d');
+            var chartValue1 = new Chart(ctxValue1, {
                 type: 'line',
                 data: {
                     labels: labels,
@@ -41,12 +75,38 @@
                         data: value1Data,
                         borderColor: 'red',
                         fill: false
-                    }, {
+                    }]
+                },
+                options: {
+                    // Configuración adicional de Chart.js para la gráfica de Value 1
+                }
+            });
+
+            // Crear gráfica para Value 2
+            var ctxValue2 = document.getElementById('chartValue2').getContext('2d');
+            var chartValue2 = new Chart(ctxValue2, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
                         label: 'Value 2',
                         data: value2Data,
                         borderColor: 'blue',
                         fill: false
-                    }, {
+                    }]
+                },
+                options: {
+                    // Configuración adicional de Chart.js para la gráfica de Value 2
+                }
+            });
+
+            // Crear gráfica para Value 3
+            var ctxValue3 = document.getElementById('chartValue3').getContext('2d');
+            var chartValue3 = new Chart(ctxValue3, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
                         label: 'Value 3',
                         data: value3Data,
                         borderColor: 'green',
@@ -54,7 +114,7 @@
                     }]
                 },
                 options: {
-                    // Configuración adicional de Chart.js
+                    // Configuración adicional de Chart.js para la gráfica de Value 3
                 }
             });
         }
