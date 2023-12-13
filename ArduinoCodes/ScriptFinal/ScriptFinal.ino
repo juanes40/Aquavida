@@ -9,7 +9,7 @@
 
   // REPLACE with your Domain name and URL path or IP address with path
 
-  const char* serverName = "http://192.168.121.212/Aquavida/PHP/post-esp-data.php";
+  const char* serverName = "http://192.168.21.102/Aquavida/PHP/post-esp-data.php";
 
   // Keep this API Key value to be compatible with the PHP code provided in the project page.
   // If you change the apiKeyValue value, the PHP file /post-esp-data.php also needs to have the same key
@@ -33,7 +33,6 @@
   #define ONE_WIRE_BUS 5 // Pin donde está conectado el sensor DS18B20
   #define ANALOG_PIN 34 // Pin donde está conectado el sensor de nivel de agua (analógico)
   #define PH_SENSOR_PIN 32 // Pin donde está conectado el sensor de pH (analógico)
-  
 
   OneWire oneWire(ONE_WIRE_BUS);
   DallasTemperature sensors(&oneWire);
@@ -64,9 +63,95 @@
     if (WiFi.status() == WL_CONNECTED) {
       WiFiClient client;
       HTTPClient http;
-      http.begin(client, serverName);
+      //==========================================================================================================
+      const char* serverName1 = "http://192.168.21.102/Aquavida/PHP/post-Luz.php";
+      http.begin(client, serverName1);
+      // Specify content-type header
+      http.addHeader("Content-Type", "application/x-www-form-urlencoded");
 
-      String serverPath = "http://192.168.121.212/Aquavida/PHP/get-esp-data.php";
+      String httpRequestData1 = "api_key=" + apiKeyValue +"&switch_estado=" +String(activacionLuz) +"";
+      int httpResponseCode1 = http.POST(httpRequestData1);
+      http.end();
+
+      http.begin(client, serverName);
+      String serverPath1 = "http://192.168.21.102/Aquavida/PHP/get-Luz.php";
+      String conectar1 = serverPath1+"?api_key="+apiKeyValue+"&estadoLuz=switch_estado";
+      http.begin(client, conectar1.c_str());
+      http.addHeader("Content-Type", "application/x-www-form-urlencoded");
+      int httpResponseCodeGet1 = http.GET();
+      String response1 = http.getString();
+      http.end();
+      activacionLuz = response1;
+      //===========================================================================================================
+      // Your Domain name with URL path or IP address with path
+      http.begin(client, serverName);
+      // Specify content-type header
+      http.addHeader("Content-Type", "application/x-www-form-urlencoded");
+
+      // Prepare your HTTP POST request data
+      float temperatureCelsius = leerTemp(tiempoTemp);
+      float waterLevel = leerNivel(tiempoNivel);
+      float ph = leerPH(tiempoPH);
+//===================== activacionLuz ===============
+      
+      if(activacionLuz=="on"){
+        digitalWrite(pinRelay, LOW);
+        Serial.println("Relé activado");
+
+      }else if( activacionLuz=="off"){
+        digitalWrite(pinRelay, HIGH);
+        Serial.println("Relé desactivado");
+      }else{
+        Serial.println("ERRORRRRRRR");
+      }
+      if(temperatureCelsius > 22){
+        int melody[] = {3, 3, 4, 5, 5, 4, 3, 2, 1, 1, 2, 3, 3, 2, 2}; // Puedes ajustar las notas según tus preferencias
+        int duracionNota = 300;
+
+        for (int i = 0; i < sizeof(melody) / sizeof(melody[0]); i++) {
+          int nota = melody[i];
+          if (nota == 0) {
+      // Pausa
+          delay(duracionNota);
+          } else {
+      // Toca la nota
+            tone(buzzerPin, notas[nota - 1]);
+            delay(duracionNota);
+            noTone(buzzerPin);
+            delay(50); // Pequeña pausa entre las notas
+          }
+        }
+        delay(200);
+      }
+
+      String httpRequestData = "api_key=" + apiKeyValue + "&sensor1=" + sensorName1 +
+                              "&location=" + sensorLocation + "&value1=" + String(temperatureCelsius) +
+                              "&sensor2=" + sensorName2 + "&value2=" + String(waterLevel) +
+                              "&sensor3=" + sensorName3 + "&value3=" + String(ph) + "&tiempotemp="+ String(tiempoTemp) +
+                              "&tiemponivel=" + String(tiempoNivel) + "&tiempoph=" + String(tiempoPH) +"";
+
+
+      Serial.print("httpRequestData: ");
+      Serial.println(httpRequestData);
+
+      // Send HTTP POST request
+      
+      int httpResponseCode = http.POST(httpRequestData);
+
+      if (httpResponseCode > 0) {
+        Serial.print("HTTP Response code: ");
+        Serial.println(httpResponseCode);
+      } else {
+        Serial.print("Error code: ");
+        Serial.println(httpResponseCode);
+      }
+
+      // Free resources
+      http.end();
+
+
+      http.begin(client, serverName);
+      String serverPath = "http://192.168.21.102/Aquavida/PHP/get-esp-data.php";
 
       String conectar = serverPath+"?api_key="+apiKeyValue+"&tiempo1=tiempotemp"+"&tiempo2=tiemponivel"+"&tiempo3=tiempoph"+"&estadoLuz=switch_estado";
       http.begin(client, conectar.c_str());
@@ -99,83 +184,21 @@
     parts[index] = response.substring(lastIndex); // La última parte después de la última coma
 
 // Convierte las partes en enteros
+      //Temperatura
       tiempoTemp = parts[0].toInt();
+
+      //Nivel
       tiempoNivel = parts[1].toInt();
+
+      //PH
       tiempoPH = parts[2].toInt();
-      activacionLuz =parts[3];
+
+      //Luz
+      //activacionLuz =parts[3];
       http.end();
       delay(500);
       //=======================================================================================
-      // Your Domain name with URL path or IP address with path
-      http.begin(client, serverName);
-
-      // Specify content-type header
-      http.addHeader("Content-Type", "application/x-www-form-urlencoded");
-
-      // Prepare your HTTP POST request data
-      float temperatureCelsius = leerTemp(tiempoTemp);
-      float waterLevel = leerNivel(tiempoNivel);
-      float ph = leerPH(tiempoPH);
-//===================== activacionLuz ===============
       
-      if(activacionLuz=="on"){
-        digitalWrite(pinRelay, LOW);
-        Serial.println("Relé activado");
-
-      }else if( activacionLuz=="off"){
-        digitalWrite(pinRelay, HIGH);
-        Serial.println("Relé desactivado");
-      }else{
-        Serial.println("ERRORRRRRRR");
-      }
-
-
-
-
-      if(temperatureCelsius > 22){
-        int melody[] = {3, 3, 4, 5, 5, 4, 3, 2, 1, 1, 2, 3, 3, 2, 2}; // Puedes ajustar las notas según tus preferencias
-        int duracionNota = 300;
-
-        for (int i = 0; i < sizeof(melody) / sizeof(melody[0]); i++) {
-          int nota = melody[i];
-          if (nota == 0) {
-      // Pausa
-          delay(duracionNota);
-          } else {
-      // Toca la nota
-            tone(buzzerPin, notas[nota - 1]);
-            delay(duracionNota);
-            noTone(buzzerPin);
-            delay(50); // Pequeña pausa entre las notas
-          }
-        }
-        delay(2000);
-      }
-
-      String httpRequestData = "api_key=" + apiKeyValue + "&sensor1=" + sensorName1 +
-                              "&location=" + sensorLocation + "&value1=" + String(temperatureCelsius) +
-                              "&sensor2=" + sensorName2 + "&value2=" + String(waterLevel) +
-                              "&sensor3=" + sensorName3 + "&value3=" + String(ph) + "&tiempotemp="+ String(tiempoTemp) +
-                              "&tiemponivel=" + String(tiempoNivel) + "&tiempoph=" + String(tiempoPH) + "&switch_estado=" +String(activacionLuz) +"";
-
-
-      Serial.print("httpRequestData: ");
-      Serial.println(httpRequestData);
-
-      // Send HTTP POST request
-      
-      int httpResponseCode = http.POST(httpRequestData);
-
-      if (httpResponseCode > 0) {
-        Serial.print("HTTP Response code: ");
-        Serial.println(httpResponseCode);
-      } else {
-        Serial.print("Error code: ");
-        Serial.println(httpResponseCode);
-      }
-
-      // Free resources
-      http.end();
     } else {
       Serial.println("WiFi Disconnected");
     }
@@ -191,12 +214,10 @@
       //Encendemos el led
       digitalWrite(pin_dos, HIGH);
       alarma = "Encendida" ;
-      delay(1000);
     }else{
       //Apagamos el led
       digitalWrite(pin_dos, LOW);
       alarma = "Apagada" ;
-      delay(1000);
     }
     return temperatureCelsius;
     delay(tiempoTemp);

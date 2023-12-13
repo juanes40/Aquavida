@@ -48,9 +48,29 @@ CREATE TABLE actuadorLuz (
 CREATE TABLE `plantas` (
   `id` int(20) NOT NULL AUTO_INCREMENT,
   `nombre` varchar(50) NOT NULL,
-  `identificacion` varchar(20) NOT NULL,
   `tipo` varchar(30) NOT NULL,
   `user_id` int(20) NOT NULL,
   PRIMARY KEY (`id`),
   FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
+)
+
+CREATE TABLE `temptime` (
+  `id` int(6) NOT NULL AUTO_INCREMENT,
+  `tiempotemp` varchar(30) NOT NULL,
+  `reading_time` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  PRIMARY KEY (`id`)
+)
+
+CREATE TABLE `niveltime` (
+  `id` int(6) NOT NULL AUTO_INCREMENT,
+  `tiemponivel` varchar(30) NOT NULL,
+  `reading_time` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  PRIMARY KEY (`id`)
+)
+
+CREATE TABLE `phtime` (
+  `id` int(6) NOT NULL AUTO_INCREMENT,
+  `tiempoph` varchar(30) NOT NULL,
+  `reading_time` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  PRIMARY KEY (`id`)
 )

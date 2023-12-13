@@ -17,6 +17,7 @@
                     <a href="index.html"><img src="../img/second (Personalizado).jfif" alt=""></a>
                 </div>
                 <div class="menu col-xs-12 col-md-6">
+                    <a href="../HTML/index.html">Inicio</a>
                     <a href="Plantas.html">Plantas</a>
                     <a href="#">Estadisticas</a>
                     <a href="#">Otros</a>
@@ -54,7 +55,7 @@
 
                     // Realizar una solicitud AJAX para obtener los datos de la planta
                     var xhr = new XMLHttpRequest();
-                    xhr.open("POST", "../PHP/consult_plantas_data.php", true);
+                    xhr.open("POST", "../PHP/consult_plant_data.php", true);
                     xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
                     xhr.onreadystatechange = function () {
                         if (xhr.readyState === 4) {

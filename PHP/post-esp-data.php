@@ -14,7 +14,7 @@ $email_address = "juanesbale53@gmail.com";
 // If you change this value, the ESP32 sketch needs to match
 $api_key_value = "tPmAT5Ab3j7F9";
 
-$api_key= $sensor1 = $location = $value1 =$sensor2 = $value2 = $sensor3 = $value3 = $tiempotemp = $tiemponivel = $tiempoph = "";
+$api_key= $sensor1 = $location = $value1 =$sensor2 = $value2 = $sensor3 = $value3 = $tiempotemp = $tiemponivel = $tiempoph ="";
 //echo $_SERVER["REQUEST_METHOD"];
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $api_key = test_input($_POST["api_key"]);
@@ -29,7 +29,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $tiempotemp = test_input($_POST["tiempotemp"]);
         $tiemponivel = test_input($_POST["tiemponivel"]);
         $tiempoph = test_input($_POST["tiempoph"]);
-        $switch_estado = test_input($_POST["switch_estado"]);
         
         $conn = new mysqli($servername, $username, $password, $dbname);
 
@@ -49,20 +48,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             echo "Error: " . $sql . "<br>" . $conn->error;
         }
 
-        $sql1 = "INSERT INTO actuadorLuz (switch_estado)
-        VALUES ('$switch_estado')";
-        
-        if ($conn->query($sql1) === TRUE) {
-            echo "New record created luz";
-        } 
-        else {
-            echo "Error: " . $sql1 . "<br>" . $conn->error;
-        }
+
 
         $email_msg = "Temperatura:" . $value1;
+
+        $email_msg = "Temperatura: " . $value1 . " PH: " . $value3;
+
+
         $email_msg = wordwrap($email_msg, 70);
         if($value1 > 20.0){
-            mail($email_address, "[NEW] ¡ALERTA! temperatura excedida", $email_msg);
+            mail($email_address, "[NEW] ¡ALERTA! temperatura y ph excedidos", $email_msg);
             echo "Email sent";
         }
         $conn->close();
