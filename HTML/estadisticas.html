@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Gráficos de SensorData</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <canvas id="myChart" width="800" height="400"></canvas>
+
+    <script>
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                var dataFromPHP = JSON.parse(this.responseText);
+                createChart(dataFromPHP);
+            }
+        };
+        xhttp.open("GET", "../PHP/estadis.php", true);
+        xhttp.send();
+
+        function createChart(data) {
+            var labels = [];
+            var value1Data = [];
+            var value2Data = [];
+            var value3Data = [];
+
+            data.forEach(function(item) {
+                labels.push(item.tiempotemp);
+                value1Data.push(item.value1);
+                value2Data.push(item.value2);
+                value3Data.push(item.value3);
+            });
+
+            var ctx = document.getElementById('myChart').getContext('2d');
+            var myChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Value 1',
+                        data: value1Data,
+                        borderColor: 'red',
+                        fill: false
+                    }, {
+                        label: 'Value 2',
+                        data: value2Data,
+                        borderColor: 'blue',
+                        fill: false
+                    }, {
+                        label: 'Value 3',
+                        data: value3Data,
+                        borderColor: 'green',
+                        fill: false
+                    }]
+                },
+                options: {
+                    // Configuración adicional de Chart.js
+                }
+            });
+        }
+    </script>
+</body>
+</html>
