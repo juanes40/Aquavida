@@ -5,7 +5,7 @@ $servername = "localhost";
 // REPLACE with your Database name
 $dbname = "aqua_vida";
 // REPLACE with Database user
-$username = "root"; //cambiar usuario IMPORTANTEEE
+$username = "juanes";
 // REPLACE with Database user password
 $password = "";
 
@@ -13,35 +13,29 @@ $password = "";
 // If you change this value, the ESP32 sketch needs to match
 $api_key_value = "tPmAT5Ab3j7F9";
 
-$api_key= $sensor1 = $location = $value1 =$sensor2 = $value2 = $sensor3 = $value3 = $tiempotemp = $tiemponivel = $tiempoph = "";
-
-if ($_SERVER["REQUEST_METHOD"] == "GET") {
-    $api_key = test_input($_GET["api_key"]);
+$api_key = $switch_estado ="";
+//echo $_SERVER["REQUEST_METHOD"];
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $api_key = test_input($_POST["api_key"]);
     if($api_key == $api_key_value) {
-        $tiempotemp = test_input($_GET["tiempo1"]);
-        $tiemponivel = test_input($_GET["tiempo2"]);
-        $tiempoph = test_input($_GET["tiempo3"]);
+        $switch_estado = test_input($_POST["switch_estado"]);
+        
         $conn = new mysqli($servername, $username, $password, $dbname);
 
         if ($conn->connect_error) {
             die("Connection failed: " . $conn->connect_error);
         } 
         
-        $sql = "SELECT * FROM sensordata ORDER BY id DESC LIMIT 1";
-        if ($result = $conn->query($sql)) {
-            $row_sensor = mysqli_fetch_row($result);
+
+        $sql1 = "INSERT INTO actuadorLuz (switch_estado)
+        VALUES ('$switch_estado')";
         
-
-                // Concatenar datos de ambas tablas
-                $var = $row_sensor[9] . "," . $row_sensor[10] . "," . $row_sensor[11];
-                echo $var;
-            
-        }
+        if ($conn->query($sql1) === TRUE) {
+            echo "New record created luz";
+        } 
         else {
-
-            echo false;
+            echo "Error: " . $sql1 . "<br>" . $conn->error;
         }
-    
         $conn->close();
     }
     else {
@@ -50,7 +44,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
 
 }
 else {
-    echo "No data get with HTTP GET.";
+    echo "No data posted with HTTP POST.";
 }
 
 function test_input($data) {

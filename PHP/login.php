@@ -4,13 +4,15 @@ include("connection.php");
 $conn = connection();
 include("cifrarDatos.php");
 
+session_start();
+
 // Obtiene los datos del formulario
 $usuario = $_POST["usuario"];
 $contraseña = $_POST["contraseña"];
 $clave = 'clave';
 
 // Consulta SQL para obtener todos los registros de usuarios y sus contraseñas cifradas
-$sql = "SELECT username, password, identifier FROM users";
+$sql = "SELECT username, password, identifier, id FROM users";
 $result = $conn->query($sql);
 
 $usuarioDescifrado = null;
@@ -27,8 +29,10 @@ if ($usuarioDescifrado != null) {
     // Ahora puedes proceder con la verificación de la contraseña
     $hashFromDatabase = $row['password'];
     $identifier = $row['identifier'];
+    $id =$row['id'];
 
     if (password_verify($contraseña, $hashFromDatabase)) {
+
         // Inicia la sesión y almacena el identificador
         session_start();
         $_SESSION['identifier'] = $identifier;
