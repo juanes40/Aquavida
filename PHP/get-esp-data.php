@@ -5,7 +5,7 @@ $servername = "localhost";
 // REPLACE with your Database name
 $dbname = "aqua_vida";
 // REPLACE with Database user
-$username = "juanes";
+$username = "root"; //cambiar usuario IMPORTANTEEE
 // REPLACE with Database user password
 $password = "";
 
@@ -13,7 +13,7 @@ $password = "";
 // If you change this value, the ESP32 sketch needs to match
 $api_key_value = "tPmAT5Ab3j7F9";
 
-$api_key= $sensor1 = $location = $value1 =$sensor2 = $value2 = $sensor3 = $value3 = $tiempotemp = $tiemponivel = $tiempoph = "";
+$api_key= $sensor1 = $location = $value1 =$sensor2 = $value2 = $sensor3 = $value3 = $tiempotemp = $tiemponivel = $tiempoph = $switch_estado = "";
 
 if ($_SERVER["REQUEST_METHOD"] == "GET") {
     $api_key = test_input($_GET["api_key"]);
@@ -21,6 +21,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
         $tiempotemp = test_input($_GET["tiempo1"]);
         $tiemponivel = test_input($_GET["tiempo2"]);
         $tiempoph = test_input($_GET["tiempo3"]);
+        $switch_estado = test_input($_GET["estadoLuz"]);
         $conn = new mysqli($servername, $username, $password, $dbname);
 
         if ($conn->connect_error) {
@@ -31,12 +32,14 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
         if ($result = $conn->query($sql)) {
             $row_sensor = mysqli_fetch_row($result);
         
+
                 // Concatenar datos de ambas tablas
                 $var = $row_sensor[9] . "," . $row_sensor[10] . "," . $row_sensor[11];
                 echo $var;
             
         }
         else {
+
             echo false;
         }
     

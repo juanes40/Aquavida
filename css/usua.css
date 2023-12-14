@@ -10,7 +10,7 @@
   
   /* ----- ----- HEADER ----- ----- */
   header {
-    background: url(../img/bgAquavida.png);
+    background: url(../img/bgAdmin.jpg);
     background-size: cover;
     background-color: rgba(255, 255, 255, 0.2);
     background-position: center 0;
@@ -394,5 +394,5 @@
     }
   }
   
-  /*# sourceMappingURL=estilos.css.map */
+  
   
