@@ -1,4 +1,5 @@
 <?php
+session_start();
 include("connection.php");
 $conn = connection();
 include("cifrarDatos.php");
@@ -28,6 +29,10 @@ if ($usuarioDescifrado != null) {
     $identifier = $row['identifier'];
 
     if (password_verify($contraseña, $hashFromDatabase)) {
+        // Inicia la sesión y almacena el identificador
+        session_start();
+        $_SESSION['identifier'] = $identifier;
+
         // Comprueba el valor de "identifier" y redirige al usuario según su valor
         if ($identifier == 0) {
             header("Location: ../HTML/adminInicial.html");
@@ -36,15 +41,15 @@ if ($usuarioDescifrado != null) {
         } else {
             // Valor de "identifier" no reconocido, puedes manejarlo de otra manera si es necesario
             echo "<script>alert('Valor de identifier no reconocido.');</script>";
-            echo "<script>window.location.href='../HTML/login.html';</script>";
+            echo "<script>window.location.href='../index.html';</script>";
         }
     } else {
         echo "<script>alert('Usuario o contraseña inválidos. Por favor, inténtelo de nuevo.');</script>";
-        echo "<script>window.location.href='../HTML/login.html';</script>";
+        echo "<script>window.location.href='../index.html';</script>";
     }
 } else {
     echo "<script>alert('Usuario o contraseña inválidos. Por favor, inténtelo de nuevo.');</script>";
-    echo "<script>window.location.href='../HTML/login.html';</script>";
+    echo "<script>window.location.href='../index.html';</script>";
 }
 
 // Cierra la conexión a la base de datos
