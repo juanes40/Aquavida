@@ -61,7 +61,7 @@ void loop() {
     int waterLevel = analogRead(ANALOG_PIN); // Lectura del sensor de nivel de agua
 
     float phValue = analogRead(PH_SENSOR_PIN);
-    float voltage = phValue * (3.3 / 4095.0);
+    float voltage = phValue * (3.3 / 5795.0);
     float ph = 3.3 * voltage;
 
     String httpRequestData = "api_key=" + apiKeyValue + "&sensor1=" + sensorName1 +

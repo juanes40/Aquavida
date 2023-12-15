@@ -169,7 +169,60 @@
   .main .caracteristicas .caracteristica .switch .input:checked ~ .indicator {
     background-color: #22ff00;
   }
+  
+    /* Estilos para el formulario con colores verdes claros */
+    .main .caracteristicas .tiempos{
+      /* Fondo verde claro */
+      background-color: #5c9b80;
+      /* Alineación del contenido */
+      text-align: center;
+      /* Espaciado interno */
+      padding: 20px;
+    }
 
+/* Estilos para los títulos */
+  .main .caracteristicas .tiempos{
+    /* Color de texto verde más oscuro */
+    color: #355f47;
+  }
+
+/* Estilos para los campos de entrada de texto */
+  .main .caracteristicas .tiempos input[type="text"] {
+      /* Fondo blanco */
+      background-color: #ffffff;
+      /* Bordes redondeados */
+      border-radius: 5px;
+      /* Espaciado interno */
+      padding: 8px;
+      /* Ancho del campo de entrada */
+      width: 100%;
+      /* Color de texto verde oscuro */
+      color: #355f47;
+      /* Borde con color verde más oscuro */
+      border: 1px solid #355f47;
+  }
+
+/* Estilos para el botón */
+.main .caracteristicas .tiempos button {
+      /* Fondo verde oscuro */
+      background-color: #355f47;
+      /* Color de texto blanco */
+      color: #ffffff;
+      /* Bordes redondeados */
+      border-radius: 5px;
+      /* Espaciado interno */
+      padding: 10px 20px;
+      /* Efecto de transición suave */
+      transition: background-color 0.3s ease-in-out;
+  }
+
+/* Cambio de color al pasar el mouse sobre el botón */
+  .main .caracteristicas .tiempos button:hover {
+      /* Cambio a un tono más oscuro */
+      background-color: #2a4938;
+  }
+
+  
 
 
 
