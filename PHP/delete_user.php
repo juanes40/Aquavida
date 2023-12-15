@@ -1,24 +1,28 @@
 <?php
-
 include("connection.php");
 $conn = connection();
 
-// Obtener datos del formulario
+// Obtener el ID del usuario a eliminar
 $idUsuario = $_POST["idUsuario"];
-$nombres = $_POST["nombres"];
-$apellidos = $_POST["apellidos"];
-$identificacion = $_POST["id"];
-$usuario = $_POST["usuario"];
-$contraseña = $_POST["contraseña"];
 
-//senstencia para eliminar usuario
-$sql = "DELETE FROM users WHERE id = '$idUsuario'";
-$query = mysqli_query($conn, $sql);
+// Eliminar las plantas asociadas al usuario
+$sqlDeletePlants = "DELETE FROM plantas WHERE user_id = '$idUsuario'";
+$queryDeletePlants = mysqli_query($conn, $sqlDeletePlants);
 
-if ($query) {
+if (!$queryDeletePlants) {
+    echo "Error al eliminar las plantas asociadas al usuario: " . $conn->error;
+    exit; // Detener la ejecución si hay un error al eliminar las plantas
+}
+
+// Eliminar al usuario
+$sqlDeleteUser = "DELETE FROM users WHERE id = '$idUsuario'";
+$queryDeleteUser = mysqli_query($conn, $sqlDeleteUser);
+
+if ($queryDeleteUser) {
+    // Redireccionar o proporcionar algún mensaje de éxito
     Header("Location: ../html/eliminarUsuario.html");
 } else {
-    echo "Error al actualizar los datos: " . $conn->error;
+    echo "Error al eliminar el usuario: " . $conn->error;
 }
 
 $conn->close();
