@@ -87,6 +87,50 @@
   header .container .formulario .principal .btn-dangerE:hover {
     background-color: #c8234f; /* Cambiar color al pasar el ratón */
   }
+  header .acerca-de .contenedor {
+	overflow: visible;
+	position: relative;
+}
+
+header .acerca-de .foto{
+	width: 80%;
+	position: absolute;
+	left: 0;
+	top:10px;
+	z-index: 0;
+	-webkit-box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.35);
+	box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.35);
+}
+
+header .acerca-de .foto img {
+	width: 100%;
+	vertical-align:top;
+}
+
+header .acerca-de article {
+	background: #fff;
+	padding: 40px;
+	width: 50%;
+	position: relative;
+	float: right;
+	/*top: 30px;*/
+	top: 150px; /*Con Parallax*/
+	z-index: 1;
+	-webkit-box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.35);
+	box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.35);
+}
+
+header .acerca-de article h3 {
+	font-size: 50px;
+	font-weight: 300;
+	margin-bottom: 10px;
+}
+
+header .acerca-de article p {
+	line-height: 28px;
+	margin-bottom: 15px;
+
+}
 
   /* ----- ----- MAIN ----- ----- */
   .main .caracteristicas {
@@ -305,51 +349,47 @@
   }
   
   /* ----- ----- FOOTER ----- ----- */
-  footer .direccion {
-    background: #3c4045;
-    padding: 30px 0;
-    color: #fff;
-  }
-  footer .direccion .titulo {
-    font-size: 32px;
-    line-height: 32px;
+  footer .contacto {
+  padding: 60px 0; }
+  footer .contacto .titulo {
+    font-size: 34px;
+    line-height: 34px;
+    margin-bottom: 60px;
     font-weight: 300;
-    margin-bottom: 30px;
-  }
-  footer .direccion .calle,
-  footer .direccion .telefono,
-  footer .direccion .correo {
-    margin-bottom: 10px;
-  }
-  footer .direccion .logo img {
-    margin-top: 70px;
-  }
-  footer .social {
-    text-align: center;
-    padding: 20px 0;
-  }
-  footer .social a {
-    padding: 10px;
-    display: inline-block;
-    margin: 0 20px;
-    width: 50px;
-    font-size: 22px;
-    color: #fff;
-    background: #000;
-    border-radius: 100px;
-  }
-  footer .social a:hover {
-    text-decoration: none;
-  }
-  footer .social a.facebook {
-    background: #3b5998;
-  }
-  footer .social a.twitter {
-    background: #55acee;
-  }
-  footer .social a.youtube {
-    background: #cd201f;
-  }
+    color: #3895ea;
+    text-align: center; }
+  footer .contacto .formulario {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between; }
+    footer .contacto .formulario input[type="text"],
+    footer .contacto .formulario input[type="email"],
+    footer .contacto .formulario textarea {
+      border: 2px solid #cecece;
+      border-radius: 5px;
+      padding: 15px 20px;
+      font-size: 20px;
+      color: #a4a4a4; }
+    footer .contacto .formulario input[type="text"],
+    footer .contacto .formulario input[type="email"] {
+      width: 49%;
+      margin-bottom: 15px; }
+    footer .contacto .formulario textarea {
+      width: 100%;
+      height: 100px;
+      min-width: 100%;
+      margin-bottom: 15px;
+      min-height: 100px;
+      max-height: 300px; }
+    footer .contacto .formulario .boton {
+      margin: auto;
+      background: #3895ea;
+      color: #fff;
+      border: none;
+      border-radius: 3px;
+      padding: 15px 40px; }
+      footer .contacto .formulario .boton:hover {
+        background: #387bea; }
   
   @media screen and (max-width: 992px) {
     header .contenedor_logo_menu .logo {
@@ -443,6 +483,32 @@
                   
 			</div>
 		</div>
+    <section class="acerca-de" id="acerca-de">
+			<div class="contenedor">
+				<div class="foto">
+					<img src="img/bgAquavida.jfif" alt="">
+				</div>
+				<article>
+					<h3>Acerca de</h3>
+					<p>Aquavida conexion total es la mejor opcion para tu cultivo hidroponico, contamos con las mejores herramientas para controlar el crecimiento de tu planta.</p>
+				
+					<p>Descubre cómo nuestra innovadora tecnología y asesoramiento experto maximizan el rendimiento de tu cultivo, proporcionando un entorno ideal para un crecimiento vigoroso y saludable.</p>
+				</article>
+			</div>
+		</section>
+    <footer>
+      <div class="contenedor">
+        <section class="contacto">
+          <h3 class="titulo">Contacto</h3>
+          <form class="formulario" action="">
+            <input type="text" placeholder="Nombre" name="nombre" required>
+            <input type="email" placeholder="Correo" name="correo" required>
+            <textarea name="mensaje" placeholder="Mensaje:"></textarea>
+            <input class="boton" type="submit" value="Enviar">
+          </form>
+        </section>
+      </div>    
+    </footer>
 		<script>
 			window.addEventListener("load", function () {
 				document.getElementById("btnIniciarSesion").addEventListener("click", function (event) {
@@ -463,6 +529,6 @@
 		</script>
 		
 	</header>
-
+  
 </body>
 </html>
