@@ -415,7 +415,7 @@
         <div class="container">
             <div class="row contenedor_logo_menu">
                 <div class="logo col-xs-12 col-md-6">
-                    <a href="index.html"><img src="../img/second (Personalizado).jfif" alt=""></a>
+                    <a href="../index.html"><img src="../img/second (Personalizado).jfif" alt=""></a>
                 </div>
                 <div class="menu col-xs-12 col-md-6">
                     <a href="../index.html">Inicio</a>
@@ -426,67 +426,33 @@
 
             <div class="row formulario">
                 <div class="principal col-xs-12 col-md-6">
-                    <h2>Edición de planta</h2>
-                    <form action="../PHP/update_plant.php" method="POST">
+                    <h2>Consulta de Plantas</h2>
+                    <form action="../PHP/update_planta.php" method="POST">
                         <div class="form-group">
-                            <label for="id">ID planta:</label>
-                            <input type="text" class="form-control" id="id" name="id" required>
+                            <label for="idPlanta">ID de la planta:</label>
+                            <input type="text" class="form-control" id="idPlanta" name="idPlanta" required>
                         </div>
-                        <button type="button" id="btnBuscar" class="btn btn-primary">Buscar</button>
-             
-                            <div id="datosPlanta" style="display: none;">
-                                <div class="form-group">
-                                    <label for="idPlanta">ID de la Planta:</label>
-                                    <input type="text" class="form-control" id="idPlanta" name="idPlanta" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="nombre">Nombre de la Planta:</label>
-                                    <input type="text" class="form-control" id="nombre" name="nombre" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="tipo">Tipo de Planta:</label>
-                                    <input type="text" class="form-control" id="tipo" name="tipo" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="user_id">Identificación del usuario:</label>
-                                    <select class="form-control" id="user_id" name="user_id" required>
-                                        
-                                    </select>
-                                </div>
-
-                                <button type="submit" id="btnEditarPlanta" class="btn btn-primary">Editar Planta</button>
-                          
+                        <button type="button" id="btnBuscarPlanta" class="btn btn-primary">Buscar Planta</button>
+        
+                        <!-- Mostrar los datos de la planta encontrada -->
+                        <div id="resultadoPlanta">
+                            <!-- Aquí se mostrarán los datos de la planta -->
                         </div>
                     </form>
                 </div>
             </div>
         </div>
         <script>
-            // Obtener las IDs de usuarios mediante una solicitud AJAX a PHP
-            fetch('../PHP/get_user_ids.php')
-                .then(response => response.json())
-                .then(data => {
-                    const select = document.getElementById('user_id');
-                    data.forEach(id => {
-                        const option = document.createElement('option');
-                        option.value = id;
-                        option.textContent = id;
-                        select.appendChild(option);
-                    });
-                })
-                .catch(error => console.error('Error:', error));
-            // Event listener cuando la página se carga completamente
             window.addEventListener("load", function () {
-                // Event listener para el botón "Buscar Planta"
-                document.getElementById("btnBuscar").addEventListener("click", function (event) {
-                    // Obtener el ID de la planta ingresado por el usuario
-                    var idPlanta = document.getElementById("id").value;
-                    // Verificar si el campo ID de Planta está vacío
+                document.getElementById("btnBuscarPlanta").addEventListener("click", function (event) {
+                    var idPlanta = document.getElementById("idPlanta").value;
+
+                    // Verificar si el campo idPlanta está vacío
                     if (idPlanta.trim() === "") {
                         alert("Por favor, ingrese un ID de planta.");
                         return; // Salir de la función si el campo está vacío
                     }
-    
+
                     // Realizar una solicitud AJAX para obtener los datos de la planta
                     var xhr = new XMLHttpRequest();
                     xhr.open("POST", "../PHP/consult_plant_data.php", true);
@@ -495,24 +461,42 @@
                         if (xhr.readyState === 4) {
                             if (xhr.status === 200) {
                                 var respuesta = JSON.parse(xhr.responseText);
+                                console.log(respuesta)
                                 if (respuesta.error) {
                                     // La planta no fue encontrada, muestra una alerta de error
                                     alert(respuesta.error);
+                                    // Ocultar los datos de la planta
+                                    document.getElementById("resultadoPlanta").innerHTML = "";
                                 } else {
-                                    document.getElementById("idPlanta").value = respuesta.id;
-                                    document.getElementById("nombre").value = respuesta.nombre;
-                                    document.getElementById("tipo").value = respuesta.tipo;
-                                    
-                                    document.getElementById("datosPlanta").style.display = "block";
+                                    // Mostrar los datos de la planta encontrada
+                                    var datosPlanta = `
+                                        <div class="form-group">
+                                            <label for="nombre">Nombre:</label>
+                                            <input type="text" class="form-control" id="nombre" name="nombre" value="${respuesta.nombre}" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="tipo">Tipo:</label>
+                                            <input type="text" class="form-control" id="tipo" name="tipo" value="${respuesta.tipo}" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="identificacion">Identificación:</label>
+                                            <input type="text" class="form-control" id="id" name="id" value="${respuesta.id}" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="user_id">Usuario:</label>
+                                            <input type="text" class="form-control" id="user_id" name="user_id" value="${respuesta.user_id}" required>
+                                        </div>
+                                    `;
+                                    document.getElementById("resultadoPlanta").innerHTML = datosPlanta;
                                 }
                             } else {
                                 // Error en la solicitud AJAX
                                 alert("Error al buscar la planta");
                             }
                         }
-                        
                     };
                     xhr.send("idPlanta=" + idPlanta);
+
                     // Prevenir el envío del formulario
                     event.preventDefault();
                 });
